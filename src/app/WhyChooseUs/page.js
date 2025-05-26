@@ -81,9 +81,9 @@ function Accordion({ items, openAccordion, toggleAccordion }) {
   return (
     <div className="space-y-4">
       {items.map((item, index) => (
-        <div key={index} className="border rounded-lg text-gray-900  overflow-hidden">
+        <div key={index} className="border rounded-lg  text-gray-900  overflow-hidden">
           <button
-            className="flex justify-between items-center w-full p-4 text-xl text-left font-semibold"
+            className="flex justify-between items-center w-full p-4 h-20 text-xl text-left font-semibold"
             onClick={() => toggleAccordion(index)}
           >
             {item.question}

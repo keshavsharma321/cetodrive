@@ -1,21 +1,19 @@
 "use client"
 
 import Link from "next/link"
-import { Phone, Mail, Apple, PlayCircle } from "lucide-react"
+import { Phone, Mail, Apple, PlayCircle, Navigation } from "lucide-react"
 import Image from "next/image"
-import { ArrowRight, Calendar, Check, MapPin, Menu } from "lucide-react"
+import { ArrowRight, Calendar, Check, MapPin, Menu  , X} from "lucide-react"
 import { useState } from "react"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import background from "../../../public/backgorund.jpg"
-
 export default function Home() {
   const [pickupDate, setPickupDate] = useState(new Date())
   const [returnDate, setReturnDate] = useState(new Date(new Date().setDate(new Date().getDate() + 1)))
   const [location, setLocation] = useState("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const formatDate = (date) => {
+    const formatDate = (date) => {
     if (!date) return ""
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -51,10 +49,7 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <button className="md:hidden text-white p-2 rounded-md" onClick={toggleMobileMenu}>
-            <Menu className="w-6 h-6" />
-          </button>
+         
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center justify-end space-x-4 lg:space-x-6">
@@ -95,58 +90,124 @@ export default function Home() {
                 </svg>
               </Link>
             </div>
-            <Link href="/login" className="text-white px-4 py-2">
-              Log in
-            </Link>
-            <Link href="/signup" className="bg-[#ea580c] text-white px-4 py-2 rounded-md">
-              Sign up
-            </Link>
+
+             {/* Mobile menu button */}
+          <button className="text-white p-2 rounded-md" onClick={toggleMobileMenu}>
+            <Menu className="w-10 h-10" />
+          </button>
+
           </div>
 
           {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="fixed inset-0 z-50 bg-[#0f172a]/95 flex flex-col md:hidden">
-              <div className="flex justify-between items-center p-4">
-                <Link href="/" className="text-white text-2xl font-bold">
-                  CatoDrive
-                </Link>
-                <button className="text-white p-2" onClick={toggleMobileMenu}>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+  {/* Enhanced Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-gradient-to-br  backdrop-blur-xl">
+            {/* Animated Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute bottom-32 right-16 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
+            </div>
+
+            <div className="relative flex flex-col h-full">
+              {/* Header with Close Button */}
+              <div className="flex justify-between items-center p-6 border-b border-white/10">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">C</span>
+                  </div>
+                  <span className="text-white text-2xl font-bold">CatoDrive</span>
+                </div>
+
+                <button
+                  className="group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  onClick={toggleMobileMenu}
+                >
+                  <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
               </div>
-              <div className="flex flex-col p-4 space-y-4">
-                <Link href="/login" className="text-white px-4 py-2 border border-white/20 rounded-md text-center">
-                  Log in
-                </Link>
-                <Link href="/signup" className="bg-[#ea580c] text-white px-4 py-2 rounded-md text-center">
-                  Sign up
-                </Link>
-                <div className="flex justify-center space-x-3 pt-4">
-                  <Link href="#" className="bg-white/10 rounded-md p-2 text-white hover:bg-white/20 transition">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                  </Link>
-                  <Link href="#" className="bg-white/10 rounded-md p-2 text-white hover:bg-white/20 transition">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                    </svg>
-                  </Link>
-                  <Link href="#" className="bg-white/10 rounded-md p-2 text-white hover:bg-white/20 transition">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                  </Link>
+
+              {/* Main Content */}
+              <div className="flex-1 flex flex-col justify-center items-center px-6 py-12">
+                {/* Logo Section */}
+                <div className="text-center mb-8 animate-fade-in">
+                  <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 mb-4">
+                    CatoDrive
+                  </h1>
+                  <p className="text-white/70 text-lg">Drive Your Dreams</p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                {/* Navigation Links */}
+                <nav className="space-y-6 text-center">
+                  {[
+                    { href: "/", label: "Home",  },
+                    { href: "/WhyChooseUs", label: "Why Choose Us",  },
+                    { href: "/about", label: "Blogs",  },
+                    { href: "/contact", label: "Contact",  },
+                    { href: "/donate", label: "Donate",  },
+                  ].map((item, index) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="group block"
+                      onClick={toggleMobileMenu}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
+                        <span className="text-2xl">{item.icon}</span>
+                        <span className="text-2xl font-semibold text-white group-hover:text-orange-400 transition-colors duration-300">
+                          {item.label}
+                        </span>
+                        <ArrowRight className="w-5 h-5 text-white/50 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
+                      </div>
+                    </Link>
+                  ))}
+                </nav>
+
+                {/* Call to Action Buttons */}
+                <div className="mt-12 space-y-4 w-full max-w-sm animate-fade-in-up">
+                  <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/30 transform">
+                    Book Your Ride
+                  </button>
+                  <button className="w-full border-2 border-white/20 hover:border-white/40 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 backdrop-blur-sm">
+                    Get Quote
+                  </button>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="p-6 border-t border-white/10">
+                <div className="flex justify-center space-x-6">
+                  {[
+                    { icon: "📱", label: "App" },
+                    { icon: "💬", label: "Chat" },
+                    { icon: "📧", label: "Email" },
+                    { icon: "📞", label: "Call" },
+                  ].map((item, index) => (
+                    <button
+                      key={index}
+                      className="group flex flex-col items-center space-y-2 p-3 rounded-xl hover:bg-white/10 transition-all duration-300"
+                    >
+                      <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
+                        {item.icon}
+                      </span>
+                      <span className="text-white/70 text-sm group-hover:text-white transition-colors duration-300">
+                        {item.label}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
+
         </header>
 
         {/* Hero Content */}
-        <div className="relative z-10 w-full flex flex-col h-full justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
+        <div className="relative z-5 w-full flex flex-col h-full justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mt-8 md:mt-16 mb-4 text-center"
             style={{ fontFamily: "var(--font-space-grotesk)" }}

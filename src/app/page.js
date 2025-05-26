@@ -1,4 +1,4 @@
-import Landing from "./screens/landingpange"
+import Landing from "./landing/page"
 const APP = () => {
   return (
     <div><Landing/></div>

@@ -7,12 +7,13 @@ import { ArrowRight, Check, Menu, X , ChevronDown} from "lucide-react"
 import { useState } from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import background from "../../../public/image 61.png"
+import img from "../../../public/Img+ button.png"
 
 
 function Feature({ title, description }) {
   return (
     <div className="space-y-3">
-      <h4 className="text-xl sm:text-2xl font-semibold">{title}</h4>
+      <h4 className="text-xl sm:text-2xl text-gray-900 font-semibold">{title}</h4>
       <p className="text-base sm:text-lg text-gray-600 leading-relaxed">{description}</p>
     </div>
   );
@@ -59,12 +60,12 @@ function Review({ quote, author }) {
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
       <div className="p-6 space-y-6 flex-grow">
         <div className="text-4xl sm:text-5xl text-[#2c6aa0]">&#34;</div>
-        <blockquote className="text-base sm:text-lg text-gray-600">
+        <blockquote className="text-base flex text-center sm:text-lg text-gray-900">
           Et aliquet netus at sapien pellentesque mollis nec dignissim maecenas. Amet erat volutpat quisque odio purus feugiat.
         </blockquote>
       </div>
       <div className="bg-[#2c6aa0] p-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           <div className="w-12 h-12 bg-white/20 rounded-full"></div>
           <div className="text-white">
             <div className="font-medium">{author}</div>
@@ -80,7 +81,7 @@ function Accordion({ items, openAccordion, toggleAccordion }) {
   return (
     <div className="space-y-4">
       {items.map((item, index) => (
-        <div key={index} className="border rounded-lg  overflow-hidden">
+        <div key={index} className="border rounded-lg text-gray-900  overflow-hidden">
           <button
             className="flex justify-between items-center w-full p-4 text-xl text-left font-semibold"
             onClick={() => toggleAccordion(index)}
@@ -89,7 +90,7 @@ function Accordion({ items, openAccordion, toggleAccordion }) {
             <ChevronDown className={`w-5 h-5 transition-transform ${openAccordion === index ? 'transform rotate-180' : ''}`} />
           </button>
           {openAccordion === index && (
-            <div className="p-4 bg-gray-50">
+            <div className="p-4 text-gray-900 bg-gray-50">
               <p>{item.answer}</p>
             </div>
           )}
@@ -102,86 +103,6 @@ function Accordion({ items, openAccordion, toggleAccordion }) {
 
 
 
-
-
-const comparisonData = [
-  {
-    feature: "Exact Car Guarantee",
-    catoDrive: "Get the car you booked, every time.",
-    traditional: "No guarantee of the exact car model or make.",
-  },
-  {
-    feature: "No Cancellations",
-    catoDrive: "We'll never cancel your booking.",
-    traditional: "Cancellations can occur last-minute.",
-  },
-  {
-    feature: "Terminal Delivery",
-    catoDrive: "Car delivered directly to DFW & Love Field.",
-    traditional: "You must take a shuttle or walk to a parking lot.",
-  },
-  {
-    feature: "Best Price Guarantee",
-    catoDrive: "The best prices, no hidden fees.",
-    traditional: "Often has hidden fees and higher rates.",
-  },
-  {
-    feature: "Personalized Service",
-    catoDrive: "Personalized assistance at no extra cost.",
-    traditional: "Often no personal assistance provided.",
-  },
-  {
-    feature: "Car Cleanliness",
-    catoDrive: "Cleaned and disinfected after every ride.",
-    traditional: "Cars may not be consistently clean or disinfected.",
-  },
-  {
-    feature: "Convenience",
-    catoDrive: "No shuttle, no lines, no hassle.",
-    traditional: "Long queues, shuttle rides, and parking hassle.",
-  },
-]
-
- function ComparisonTable() {
-  return (
-    <div className="max-w-6xl mx-auto p-4 bg-gray-50 rounded-xl shadow-lg">
-    <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Why Choose CatoDrive?</h2>
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse bg-white rounded-lg overflow-hidden">
-        <thead className="bg-blue-600 text-white">
-          <tr>
-            <th className="py-4 px-6 text-left font-semibold">Feature</th>
-            <th className="py-4 px-6 text-left font-semibold">CatoDrive</th>
-            <th className="py-4 px-6 text-left font-semibold">Traditional Car Rentals</th>
-          </tr>
-        </thead>
-        <tbody>
-          {comparisonData.map((item, index) => (
-            <tr
-              key={item.feature}
-              className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-            >
-              <td className="py-4 px-6 font-semibold text-gray-800">{item.feature}</td>
-              <td className="py-4 px-6">
-                <div className="flex items-start gap-2">
-                  <Check className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">{item.catoDrive}</span>
-                </div>
-              </td>
-              <td className="py-4 px-6">
-                <div className="flex items-start gap-2">
-                  <X className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">{item.traditional}</span>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  )
-}
 
 
 function Statistic({ number, label }) {
@@ -237,9 +158,11 @@ export default function Home() {
             </Link>
           </div>
 
+         
+
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center justify-end space-x-4 lg:space-x-6">
-            <div className="flex space-x-2">
+          <div className=" items-center flex justify-end space-x-4 lg:space-x-6">
+            <div className="hidden md:flex space-x-2">
               <Link href="#" className="bg-white/10 rounded-md p-2 text-white hover:bg-white/20 transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -277,107 +200,135 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Mobile menu button */}
-            <button className="text-white p-2 rounded-md" onClick={toggleMobileMenu}>
-              <Menu className="w-10 h-10" />
-            </button>
+             {/* Mobile menu button */}
+          <button className="text-white p-2 rounded-md" onClick={toggleMobileMenu}>
+            <Menu className="w-10 h-10" />
+          </button>
+
           </div>
 
           {/* Mobile Menu */}
-          {/* Enhanced Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="fixed inset-0 z-50 bg-gradient-to-br  backdrop-blur-xl">
-              {/* Animated Background Pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-32 right-16 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
-              </div>
+  {/* Enhanced Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-gradient-to-br  backdrop-blur-xl">
+            {/* Animated Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute bottom-32 right-16 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
+            </div>
 
-              <div className="relative flex flex-col h-full">
-                {/* Header with Close Button */}
-                <div className="flex justify-between items-center p-6 border-b border-white/10">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">C</span>
-                    </div>
-                    <span className="text-white text-2xl font-bold">CatoDrive</span>
+            <div className="relative flex flex-col h-full">
+              {/* Header with Close Button */}
+              <div className="flex justify-between items-center p-6 border-b border-white/10">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">C</span>
                   </div>
-
-                  <button
-                    className="group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                    onClick={toggleMobileMenu}
-                  >
-                    <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </button>
+                  <span className="text-white text-2xl font-bold">CatoDrive</span>
                 </div>
 
-                {/* Main Content */}
-                <div className="flex-1 flex flex-col justify-center items-center px-6 py-12">
-                  {/* Logo Section */}
-                  <div className="text-center mb-8 animate-fade-in">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 mb-4">
-                      CatoDrive
-                    </h1>
-                    <p className="text-white/70 text-lg">Drive Your Dreams</p>
-                    <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-4 rounded-full"></div>
-                  </div>
+                <button
+                  className="group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  onClick={toggleMobileMenu}
+                >
+                  <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+              </div>
 
-                  {/* Navigation Links */}
-                  <nav className="space-y-6 text-center">
-                    {[
-                      { href: "/", label: "Home",  },
-                    { href: "/WhyChooseUs", label: "Why Choose Us",  },
-                    { href: "/about", label: "Blogs",  },
-                    { href: "/contact", label: "Contact",  },
-                    { href: "/donate", label: "Donate",  },
-                    ].map((item, index) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="group block"
-                        onClick={toggleMobileMenu}
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
-                          <span className="text-2xl">{item.icon}</span>
-                          <span className="text-2xl font-semibold text-white group-hover:text-orange-400 transition-colors duration-300">
-                            {item.label}
-                          </span>
-                          <ArrowRight className="w-5 h-5 text-white/50 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
-                        </div>
-                      </Link>
-                    ))}
-                  </nav>
+              {/* Main Content */}
+              <div className="flex-1 flex flex-col justify-center items-center px-6 py-12">
+                {/* Logo Section */}
+                <div className="text-center mb-8 animate-fade-in">
+                  <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 mb-4">
+                    CatoDrive
+                  </h1>
+                  <p className="text-orange-500 text-lg">Drive Your Dreams</p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-4 rounded-full"></div>
+                </div>
 
-                  {/* Call to Action Buttons */}
-                  <div className="mt-12 space-y-4 w-full max-w-sm animate-fade-in-up">
-                    <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/30 transform">
-                      Book Your Ride
+                {/* Navigation Links */}
+               <nav className="space-y-6 text-center">
+  {[
+    { href: "/", label: "Home" },
+    { href: "/WhyChooseUs", label: "Why Choose Us" },
+    { href: "/about", label: "Blogs" },
+    { href: "/contact", label: "Contact" },
+    { href: "/donate", label: "Donate" },
+  ].map((item, index) => (
+    <Link
+      key={item.href}
+      href={item.href}
+      className="group block"
+      onClick={toggleMobileMenu}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-orange-500 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
+        <span className="text-2xl">{item.icon}</span>
+        <span className="text-2xl font-semibold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          {item.label}
+        </span>
+        <ArrowRight className="w-5 h-5 text-orange-500 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
+      </div>
+    </Link>
+  ))}
+</nav>
+
+
+                {/* Call to Action Buttons */}
+                <div className="mt-12 space-y-4 w-full max-w-sm animate-fade-in-up">
+                  <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/30 transform">
+                    Book Your Ride
+                  </button>
+                  <button className="w-full border-2 border-white/20 hover:border-white/40 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 backdrop-blur-sm">
+                    Get Quote
+                  </button>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="p-6 border-t border-white/10">
+                <div className="flex justify-center space-x-6">
+                  {[
+                    { icon: "📱", label: "App" },
+                    { icon: "💬", label: "Chat" },
+                    { icon: "📧", label: "Email" },
+                    { icon: "📞", label: "Call" },
+                  ].map((item, index) => (
+                    <button
+                      key={index}
+                      className="group flex flex-col items-center space-y-2 p-3 rounded-xl hover:bg-white/10 transition-all duration-300"
+                    >
+                      <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
+                        {item.icon}
+                      </span>
+                      <span className="text-white/70 text-sm group-hover:text-white transition-colors duration-300">
+                        {item.label}
+                      </span>
                     </button>
-                    <button className="w-full border-2 border-white/20 hover:border-white/40 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 backdrop-blur-sm">
-                      Get Quote
-                    </button>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
+
         </header>
 
         {/* Hero Content */}
-        <div className="relative z-5 w-full flex flex-col h-full justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
+        <div className="relative z-5 w-full flex flex-col h-full mt-20 sm:mt-0 justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mt-8 md:mt-16 mb-4 text-center"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            Where Elegance Meets
+            Where Elegance Meets 
           </h1>
 
-          <p className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-[#ea580c] font-bold max-w-4xl mb-8 md:mb-16 text-center">
-            the Road
-          </p>
+          <p className="text-[#ea580c] text-4xl sm:text-4xl font-bold md:text-8xl max-w-4xl mb-8 md:mb-16 text-center">
+the Road          </p>
+
+
         </div>
       </div>
 
@@ -390,110 +341,126 @@ export default function Home() {
           </div>
 
           {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Unmatched Reliability</h3>
-              <p className="text-gray-600 text-sm">
-                Our fleet undergoes rigorous maintenance to ensure your safety and comfort on every journey.
-              </p>
-            </div>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+  {[
+    {
+      title: "Unmatched Reliability",
+      desc: "Our fleet undergoes rigorous maintenance to ensure your safety and comfort on every journey.",
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+        />
+      ),
+    },
+    {
+      title: "Exceptional Service",
+      desc: "Experience premium service with professional drivers and personalized attention to detail.",
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+        />
+      ),
+    },
+    {
+      title: "Competitive Pricing",
+      desc: "Transparent pricing with no hidden fees. Get the best value for premium transportation services.",
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      ),
+    },
+    {
+      title: "24/7 Customer Support",
+      desc: "Round-the-clock assistance whenever you need it. We're here to help at any time of day.",
+      icon: (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      ),
+    },
+  ].map(({ title, desc, icon }, i) => (
+    <div key={i} className="bg-white border border-white rounded-2xl p-6 shadow-md text-left">
+      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {icon}
+        </svg>
+      </div>
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
+      <p className="text-gray-600 text-sm">{desc}</p>
+      <p className="text-gray-600 text-sm  mt-2 font-medium mb-1">Solution to save you money</p>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Exceptional Service</h3>
-              <p className="text-gray-600 text-sm">
-                Experience premium service with professional drivers and personalized attention to detail.
-              </p>
-            </div>
+    </div>
+  ))}
+</div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Competitive Pricing</h3>
-              <p className="text-gray-600 text-sm">
-                Transparent pricing with no hidden fees. Get the best value for premium transportation services.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Customer Support</h3>
-              <p className="text-gray-600 text-sm">
-                Round-the-clock assistance whenever you need it. We&#39;re here to help at any time of day.
-              </p>
-            </div>
-          </div>
 
       
 
-          <div className="grid gap-8 lg:grid-cols-2 mb-8 sm:mb-12 lg:mb-16">
-        <div className="flex items-center">
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-            Where every drive feels extraordinary
-          </h3>
-        </div>
+<div className="max-w-6xl mx-auto  px-4">
+  <div className="grid gap-8 lg:grid-cols-2 mb-8 sm:mb-12 lg:mb-32 lg:mt-32">
+    {/* Left Column: Heading */}
+    <div className="flex items-start">
+      <h3 className="text-3xl font-bold text-gray-900 sm:text-4xl md:text-6xl">
+        Where every <br />
+        drive feels <br />
+        extraordinary
+      </h3>
+    </div>
 
-        <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <Feature 
-            title="Variety Brands"
-            description="Access our diverse fleet that suits every taste and need. From luxury brands to family-friendly vehicles."
-          />
-          <Feature 
-            title="Maximum Freedom"
-            description="Experience premium vehicles with easy extension options. No hidden charges for extended bookings."
-          />
-          <Feature 
-            title="Flexibility On The Go"
-            description="Make pickup easy and quick in our location. We ensure your experience is smooth and hassle-free."
-          />
-        </div>
+    {/* Right Column: Features */}
+    <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
+      <div>
+        <h4 className="font-bold text-xl text-gray-900 mb-2">Variety Brands</h4>
+        <p className="text-md text-gray-700">
+          Platea non auctor fermentum sollicitudin. Eget adipiscing augue sit quam natoque ornare cursus viverra odio
+        </p>
       </div>
+      <div>
+        <h4 className="font-bold text-xl text-gray-900 mb-2">Awesome Support</h4>
+        <p className="text-md text-gray-700">
+          Eget adipiscing augue sit quam natoque ornare cursus viverra odio. Diam quam gravida ultricies velit
+        </p>
+      </div>
+      <div>
+        <h4 className="font-bold text-xl text-gray-900 mb-2">Maximum Freedom</h4>
+        <p className="text-md text-gray-700">
+          Diam quam gravida ultricies velit duis consequat integer. Est aliquam posuere vel rhoncus massa volutpat in
+        </p>
+      </div>
+      <div>
+        <h4 className="font-bold text-xl text-gray-900 mb-2">Flexibility On The Go</h4>
+        <p className="text-md text-gray-700">
+          Vitae pretium nulla sed quam id nisl semper. Vel non in proin egestas dis faucibus rhoncus. Iaculis dignissim aenean pellentesque nisl
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
       {/* Statistics Section */}
       <div className="space-y-8 sm:space-y-12 mb-8 sm:mb-12 lg:mb-16">
-  <div className="relative w-full max-w-7xl mx-auto rounded-lg overflow-hidden bg-gray-100" style={{ height: '300px', maxHeight: '500px' }}>
+  <div className="relative w-full  mx-auto rounded-lg overflow-hidden bg-gray-100" style={{ height: '550px', maxHeight: '800px' }}>
     <div className="absolute inset-0 bg-blue-100 rounded-lg overflow-hidden">
-      {/* <Image
-        src={Img}
+      <Image
+        src={img}
         alt="Luxury car on the road"
         className="w-full h-full object-cover"
-      /> */}
+      />
     </div>
   </div>
 
@@ -509,7 +476,7 @@ export default function Home() {
       {/* Memories Section */}
       <div className="grid gap-8 lg:grid-cols-2 items-center mb-8 sm:mb-12 lg:mb-16">
         <div className="space-y-6 sm:space-y-8">
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+          <h3 className="text-xl sm:text-2xl text-gray-900 md:text-3xl lg:text-4xl font-bold leading-tight">
             Unlock unforgettable memories on the road
           </h3>
           <div className="grid gap-4">
@@ -530,7 +497,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <ComparisonTable/>
 
       {/* Download App Section */}
       <div className="bg-[#4B96F8] min-h-[400px] flex items-center justify-center mt-20 sm:mt-40 md:mt-60 lg:mt-80 px-4 py-16">
@@ -590,11 +556,11 @@ export default function Home() {
 
       {/* Reviews Section */}
       <div className="py-8 sm:py-12 md:py-16 lg:py-20">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16">Reviews from our customers</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-5xl text-gray-900 font-bold text-center mb-8 sm:mb-12 lg:mb-16">Reviews from our customers</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <Review 
             quote="Et aliquet nunc et system perfectionist nulla tare dignissim neque. Nulla quis sagittis neque in dapibus Nulla quis tellus sit."
-            author="Emmanuel Doyle"
+            author="Emmanuel "
           />
           <Review 
             quote="Porta consectetur tellus duis urna placerat purus nulla. Nam tincidunt nunc id dapibus. Lorem ipsum dolor sit amet adipiscing."
@@ -609,8 +575,8 @@ export default function Home() {
 
       {/* FAQ Section */}
       <div className="py-8 sm:py-12 md:py-16 lg:py-20">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 lg:mb-16">Top Asked Questions</h2>
-        <div className="max-w-6xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl text-gray-900 font-bold text-center mb-8 sm:mb-12 lg:mb-16">Top Asked Questions</h2>
+        <div className="max-w-8xl mx-auto">
           <Accordion
             items={[
               {

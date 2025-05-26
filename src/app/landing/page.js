@@ -52,8 +52,8 @@ export default function Home() {
          
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center justify-end space-x-4 lg:space-x-6">
-            <div className="flex space-x-2">
+          <div className=" items-center flex justify-end space-x-4 lg:space-x-6">
+            <div className="hidden md:flex space-x-2">
               <Link href="#" className="bg-white/10 rounded-md p-2 text-white hover:bg-white/20 transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -135,36 +135,37 @@ export default function Home() {
                   <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 mb-4">
                     CatoDrive
                   </h1>
-                  <p className="text-white/70 text-lg">Drive Your Dreams</p>
+                  <p className="text-orange-500 text-lg">Drive Your Dreams</p>
                   <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-4 rounded-full"></div>
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="space-y-6 text-center">
-                  {[
-                    { href: "/", label: "Home",  },
-                    { href: "/WhyChooseUs", label: "Why Choose Us",  },
-                    { href: "/about", label: "Blogs",  },
-                    { href: "/contact", label: "Contact",  },
-                    { href: "/donate", label: "Donate",  },
-                  ].map((item, index) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="group block"
-                      onClick={toggleMobileMenu}
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
-                        <span className="text-2xl">{item.icon}</span>
-                        <span className="text-2xl font-semibold text-white group-hover:text-orange-400 transition-colors duration-300">
-                          {item.label}
-                        </span>
-                        <ArrowRight className="w-5 h-5 text-white/50 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
-                      </div>
-                    </Link>
-                  ))}
-                </nav>
+               <nav className="space-y-6 text-center">
+  {[
+    { href: "/", label: "Home" },
+    { href: "/WhyChooseUs", label: "Why Choose Us" },
+    { href: "/about", label: "Blogs" },
+    { href: "/contact", label: "Contact" },
+    { href: "/donate", label: "Donate" },
+  ].map((item, index) => (
+    <Link
+      key={item.href}
+      href={item.href}
+      className="group block"
+      onClick={toggleMobileMenu}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-orange-500 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
+        <span className="text-2xl">{item.icon}</span>
+        <span className="text-2xl font-semibold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          {item.label}
+        </span>
+        <ArrowRight className="w-5 h-5 text-orange-500 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
+      </div>
+    </Link>
+  ))}
+</nav>
+
 
                 {/* Call to Action Buttons */}
                 <div className="mt-12 space-y-4 w-full max-w-sm animate-fade-in-up">

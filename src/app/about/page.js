@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Hero Section with Background */}
-      <div className="relative w-full min-h-[600px] md:min-h-[700px] lg:h-screen bg-[#0f172a] overflow-hidden">
+       <div className="relative w-full min-h-[600px] md:min-h-[700px] lg:h-screen bg-[#0f172a] overflow-hidden">
         <Image src={background || "/placeholder.svg"} alt="Hero background" fill className="object-cover" priority />
 
         {/* Header/Navigation */}
@@ -38,9 +38,11 @@ export default function Home() {
             </Link>
           </div>
 
+         
+
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center justify-end space-x-4 lg:space-x-6">
-            <div className="flex space-x-2">
+          <div className=" items-center flex justify-end space-x-4 lg:space-x-6">
+            <div className="hidden md:flex space-x-2">
               <Link href="#" className="bg-white/10 rounded-md p-2 text-white hover:bg-white/20 transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -78,107 +80,135 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Mobile menu button */}
-            <button className="text-white p-2 rounded-md" onClick={toggleMobileMenu}>
-              <Menu className="w-10 h-10" />
-            </button>
+             {/* Mobile menu button */}
+          <button className="text-white p-2 rounded-md" onClick={toggleMobileMenu}>
+            <Menu className="w-10 h-10" />
+          </button>
+
           </div>
 
           {/* Mobile Menu */}
-          {/* Enhanced Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="fixed inset-0 z-50 bg-gradient-to-br  backdrop-blur-xl">
-              {/* Animated Background Pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-32 right-16 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
-              </div>
+  {/* Enhanced Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-gradient-to-br  backdrop-blur-xl">
+            {/* Animated Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute bottom-32 right-16 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
+            </div>
 
-              <div className="relative flex flex-col h-full">
-                {/* Header with Close Button */}
-                <div className="flex justify-between items-center p-6 border-b border-white/10">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">C</span>
-                    </div>
-                    <span className="text-white text-2xl font-bold">CatoDrive</span>
+            <div className="relative flex flex-col h-full">
+              {/* Header with Close Button */}
+              <div className="flex justify-between items-center p-6 border-b border-white/10">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">C</span>
                   </div>
-
-                  <button
-                    className="group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                    onClick={toggleMobileMenu}
-                  >
-                    <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </button>
+                  <span className="text-white text-2xl font-bold">CatoDrive</span>
                 </div>
 
-                {/* Main Content */}
-                <div className="flex-1 flex flex-col justify-center items-center px-6 py-12">
-                  {/* Logo Section */}
-                  <div className="text-center mb-8 animate-fade-in">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 mb-4">
-                      CatoDrive
-                    </h1>
-                    <p className="text-white/70 text-lg">Drive Your Dreams</p>
-                    <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-4 rounded-full"></div>
-                  </div>
+                <button
+                  className="group relative w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  onClick={toggleMobileMenu}
+                >
+                  <X className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" />
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+              </div>
 
-                  {/* Navigation Links */}
-                  <nav className="space-y-6 text-center">
-                    {[
-                    { href: "/", label: "Home",  },
-                    { href: "/WhyChooseUs", label: "Why Choose Us",  },
-                    { href: "/about", label: "Blogs",  },
-                    { href: "/contact", label: "Contact",  },
-                    { href: "/donate", label: "Donate",  },
-                    ].map((item, index) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="group block"
-                        onClick={toggleMobileMenu}
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
-                          <span className="text-2xl">{item.icon}</span>
-                          <span className="text-2xl font-semibold text-white group-hover:text-orange-400 transition-colors duration-300">
-                            {item.label}
-                          </span>
-                          <ArrowRight className="w-5 h-5 text-white/50 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
-                        </div>
-                      </Link>
-                    ))}
-                  </nav>
+              {/* Main Content */}
+              <div className="flex-1 flex flex-col justify-center items-center px-6 py-12">
+                {/* Logo Section */}
+                <div className="text-center mb-8 animate-fade-in">
+                  <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 mb-4">
+                    CatoDrive
+                  </h1>
+                  <p className="text-orange-500 text-lg">Drive Your Dreams</p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mt-4 rounded-full"></div>
+                </div>
 
-                  {/* Call to Action Buttons */}
-                  <div className="mt-12 space-y-4 w-full max-w-sm animate-fade-in-up">
-                    <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/30 transform">
-                      Book Your Ride
+                {/* Navigation Links */}
+               <nav className="space-y-6 text-center">
+  {[
+    { href: "/", label: "Home" },
+    { href: "/WhyChooseUs", label: "Why Choose Us" },
+    { href: "/about", label: "Blogs" },
+    { href: "/contact", label: "Contact" },
+    { href: "/donate", label: "Donate" },
+  ].map((item, index) => (
+    <Link
+      key={item.href}
+      href={item.href}
+      className="group block"
+      onClick={toggleMobileMenu}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-orange-500 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
+        <span className="text-2xl">{item.icon}</span>
+        <span className="text-2xl font-semibold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
+          {item.label}
+        </span>
+        <ArrowRight className="w-5 h-5 text-orange-500 group-hover:text-orange-400 group-hover:translate-x-1 transition-all duration-300" />
+      </div>
+    </Link>
+  ))}
+</nav>
+
+
+                {/* Call to Action Buttons */}
+                <div className="mt-12 space-y-4 w-full max-w-sm animate-fade-in-up">
+                  <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/30 transform">
+                    Book Your Ride
+                  </button>
+                  <button className="w-full border-2 border-white/20 hover:border-white/40 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 backdrop-blur-sm">
+                    Get Quote
+                  </button>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="p-6 border-t border-white/10">
+                <div className="flex justify-center space-x-6">
+                  {[
+                    { icon: "📱", label: "App" },
+                    { icon: "💬", label: "Chat" },
+                    { icon: "📧", label: "Email" },
+                    { icon: "📞", label: "Call" },
+                  ].map((item, index) => (
+                    <button
+                      key={index}
+                      className="group flex flex-col items-center space-y-2 p-3 rounded-xl hover:bg-white/10 transition-all duration-300"
+                    >
+                      <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
+                        {item.icon}
+                      </span>
+                      <span className="text-white/70 text-sm group-hover:text-white transition-colors duration-300">
+                        {item.label}
+                      </span>
                     </button>
-                    <button className="w-full border-2 border-white/20 hover:border-white/40 text-white py-4 px-8 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/5 backdrop-blur-sm">
-                      Get Quote
-                    </button>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
+
         </header>
 
         {/* Hero Content */}
-        <div className="relative z-5 w-full flex flex-col h-full justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
+        <div className="relative z-5 w-full flex flex-col h-full mt-20 lg:mt-0 justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mt-8 md:mt-16 mb-4 text-center"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            Premium Support for
+            Premium Support for 
           </h1>
 
-          <p className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-[#ea580c] font-bold max-w-4xl mb-8 md:mb-16 text-center">
-            Premium Travellers
-          </p>
+          <p className="text-[#ea580c] text-4xl sm:text-4xl font-bold md:text-6xl lg:text-8xl max-w-4xl mb-8 md:mb-16 text-center">
+Premium Travellers       </p>
+
+
         </div>
       </div>
 

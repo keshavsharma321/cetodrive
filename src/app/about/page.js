@@ -177,7 +177,7 @@ export default function Home() {
           </h1>
 
           <p className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-[#ea580c] font-bold max-w-4xl mb-8 md:mb-16 text-center">
-            Premium Vehicles
+            Premium Travellers
           </p>
         </div>
       </div>

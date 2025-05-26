@@ -21,18 +21,7 @@ function Feature({ title, description }) {
 
 
 
-function AppStoreButton({ store }) {
-  return (
-    <a href="#" className="bg-black hover:bg-gray-900 transition-colors rounded-lg px-6 py-3 flex items-center gap-2">
-      <img
-        src="/placeholder.svg?height=24&width=24"
-        alt={store}
-        className="w-6 h-6"
-      />
-      <span className="text-white">{store}</span>
-    </a>
-  );
-}
+
 
 function CarBanner() {
   return (
@@ -69,7 +58,7 @@ function Review({ quote, author }) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
       <div className="p-6 space-y-6 flex-grow">
-        <div className="text-4xl sm:text-5xl text-[#2c6aa0]">"</div>
+        <div className="text-4xl sm:text-5xl text-[#2c6aa0]">&#34;</div>
         <blockquote className="text-base sm:text-lg text-gray-600">
           Et aliquet netus at sapien pellentesque mollis nec dignissim maecenas. Amet erat volutpat quisque odio purus feugiat.
         </blockquote>
@@ -466,7 +455,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Customer Support</h3>
               <p className="text-gray-600 text-sm">
-                Round-the-clock assistance whenever you need it. We're here to help at any time of day.
+                Round-the-clock assistance whenever you need it. We&#39;re here to help at any time of day.
               </p>
             </div>
           </div>

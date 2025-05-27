@@ -144,8 +144,8 @@ export default function Home() {
   {[
     { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
-    { href: "/about", label: "Blogs" },
-    { href: "/contact", label: "Contact" },
+    { href: "/contactus", label: "Contact" },
+    { href: "/vehicle", label: "Vehicle" },
     { href: "/donate", label: "Donate" },
   ].map((item, index) => (
     <Link

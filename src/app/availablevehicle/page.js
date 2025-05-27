@@ -270,7 +270,7 @@ const handleImageClick = () => {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mt-8 md:mt-16 mb-4 text-center"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            What's Ready For <span className="text-[#ea580c]">The Road</span>
+            What&apos;s Ready For <span className="text-[#ea580c]">The Road</span>
           </h1>
 
 

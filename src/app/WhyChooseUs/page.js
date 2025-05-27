@@ -8,6 +8,10 @@ import { useState } from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import background from "../../../public/image 61.png"
 import img from "../../../public/Img+ button.png"
+import GFR from "../../../public/GFR.png"
+import Frame from "../../../public/Frame.png"
+
+
 
 
 function Feature({ title, description }) {
@@ -26,31 +30,31 @@ function Feature({ title, description }) {
 
 function CarBanner() {
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-blue-400 rounded-2xl overflow-hidden relative mb-16 flex flex-col md:flex-row items-center">
-      <div className="px-8 py-6 relative z-10 w-full md:w-1/2">
-        <div className="max-w-xl">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
-            Looking for a car?
-          </h2>
-          <p className="text-white/90 mb-2">
-            +XXX-XXX-XXXX
-          </p>
-          <p className="text-white/80 text-sm mb-4">
-            Amet vero hac eros massa. Faucibus ipsum arcu lectus nisl sapien bibendum ullamcorper in...
-          </p>
-          <button className="bg-orange-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-orange-400 transition-colors">
-            Book now
-          </button>
+    <div className="min-h-screen flex items-center lg:-mt-24 lg:-mb-24 justify-center px-4">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-400 rounded-2xl overflow-hidden relative justify-center max-w-7xl flex flex-col md:flex-row items-center w-full ">
+        <div className="px-8 py-6 flex justify-center relative z-10 w-full md:w-1/2">
+          <div className="max-w-xl">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
+              Looking for a car?
+            </h2>
+            <p className="text-white/90 mb-2">+XXX-XXX-XXXX</p>
+            <p className="text-white/80 text-sm mb-4">
+              Amet vero hac eros massa. Faucibus ipsum arcu lectus nisl sapien bibendum ullamcorper in...
+            </p>
+            <button className="bg-orange-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-orange-400 transition-colors">
+              Book now
+            </button>
+          </div>
         </div>
+        <div className="w-full md:w-1/2 h-64 md:h-96">
+          <Image
+            src={Frame}
+            alt="BMW 2-Series Coupe"
+            className="object-cover w-full h-full"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/50 to-transparent pointer-events-none" />
       </div>
-      <div className="w-full md:w-1/2 h-64 md:h-96">
-        {/* <img
-          src={Img2}
-          alt="BMW 2-Series Coupe"
-          className="object-cover w-full h-full"
-        /> */}
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/50 to-transparent pointer-events-none" />
     </div>
   );
 }
@@ -120,7 +124,7 @@ function MemoryItem({ text }) {
       <div className="mt-1">
         <Check className="h-5 w-5 text-blue-600" />
       </div>
-      <p className="text-sm text-gray-600">{text}</p>
+      <p className="text-md text-gray-600">{text}</p>
     </div>
   );
 }
@@ -464,7 +468,7 @@ the Road          </p>
     </div>
   </div>
 
-  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto text-center">
+  <div className="grid grid-cols-1 lg:mt-36 sm:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto text-center">
     <Statistic number="20k+" label="Happy customers" />
     <Statistic number="540+" label="Expert of cars" />
     <Statistic number="25+" label="Years of experience" />
@@ -474,32 +478,43 @@ the Road          </p>
 
 
       {/* Memories Section */}
-      <div className="grid gap-8 lg:grid-cols-2 items-center mb-8 sm:mb-12 lg:mb-16">
-        <div className="space-y-6 sm:space-y-8">
-          <h3 className="text-xl sm:text-2xl text-gray-900 md:text-3xl lg:text-4xl font-bold leading-tight">
+      <div className="max-w-7xl mx-auto px-4 lg:mt-36 sm:px-6 lg:px-8">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 my-16">
+        
+        {/* Left: Content */}
+        <div className="w-full lg:w-1/2 space-y-6">
+          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900">
             Unlock unforgettable memories on the road
-          </h3>
-          <div className="grid gap-4">
-            <MemoryItem text="Browse and book our luxury cars. We'll have it ready perfect waiting at your preferred location." />
-            <MemoryItem text="Enjoy your premium vehicle with our top-notch service and flexible booking options." />
-            <MemoryItem text="Return your car at any of our convenient locations across the city." />
-            <MemoryItem text="Share your experience and join our community of satisfied customers." />
+          </h2>
+          <p className="text-gray-500 text-md">
+            Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor
+            tristique et gravida. Quis nunc interdum gravida ullamcorper
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <MemoryItem text="Velit semper morbi. Purus non eu cursus porttitor tristique et gravida..." />
+            <MemoryItem text="Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum" />
+            <MemoryItem text="Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor" />
+            <MemoryItem text="Quis nunc interdum gravida ullamcorper" />
           </div>
         </div>
 
-        <div className="relative aspect-[4/3] w-full">
-          <div className="absolute inset-0 bg-blue-100 rounded-lg overflow-hidden">
-            {/* <img
-              src={Img1}
-              alt="Luxury car on the road"
+        {/* Right: Image */}
+        <div className="relative aspect-[4/3] w-full lg:w-1/2">
+          <div className="absolute inset-0 rounded-xl overflow-hidden shadow-md">
+            <Image
+              src={GFR}
+              alt="Man in car smiling with thumbs up"
               className="w-full h-full object-cover"
-            /> */}
+              layout="fill"
+            />
           </div>
         </div>
       </div>
+    </div>
 
       {/* Download App Section */}
-      <div className="bg-[#4B96F8] min-h-[400px] flex items-center justify-center mt-20 sm:mt-40 md:mt-60 lg:mt-80 px-4 py-16">
+      <div className="bg-[#4B96F8] min-h-[400px] flex items-center justify-center mt-40 sm:mt-40 md:mt-60 lg:mt-100 px-4 py-16">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-16">
         {/* Phone Mockup */}
         <div className="w-64 md:w-80 -mt-32 sm:-mt-48 md:-mt-72 relative">
@@ -555,8 +570,8 @@ the Road          </p>
 
 
       {/* Reviews Section */}
-      <div className="py-8 sm:py-12 md:py-16 lg:py-20">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl text-gray-900 font-bold text-center mb-8 sm:mb-12 lg:mb-16">Reviews from our customers</h2>
+      <div className="py-8 sm:py-12 mt-10 md:py-16 lg:py-20">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl text-gray-900 font-bold text-center mb-8 sm:mb-12 lg:mb-16 lg:mt-18">Reviews from our customers</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <Review 
             quote="Et aliquet nunc et system perfectionist nulla tare dignissim neque. Nulla quis sagittis neque in dapibus Nulla quis tellus sit."
@@ -607,9 +622,11 @@ the Road          </p>
       </div>
           
         </div>
+              <CarBanner/>
+
       </section>
 
-      <CarBanner/>
+      {/* <CarBanner/> */}
 
       {/* Rent/Host Section */}
 

@@ -186,7 +186,7 @@ const handleImageClick = () => {
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
             </div>
 
-            <div className="relative flex flex-col h-full">
+<div className="relative flex flex-col max-h-screen overflow-y-auto">
               {/* Header with Close Button */}
               <div className="flex justify-between items-center p-6 border-b border-white/10">
                 <div className="flex items-center space-x-3">
@@ -219,11 +219,12 @@ const handleImageClick = () => {
                 {/* Navigation Links */}
                <nav className="space-y-6 text-center">
   {[
-    { href: "/", label: "Home" },
+  { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
-      { href: "/contactus", label: "Contact" },
+    { href: "/contactus", label: "Contact" },
     { href: "/vehicle", label: "Vehicle" },
-    { href: "/donate", label: "Donate" },
+    { href: "/availablevehicle", label: "Available Vehicle" },
+    { href: "/popularcars", label: "Popular Cars" },
   ].map((item, index) => (
     <Link
       key={item.href}
@@ -256,28 +257,7 @@ const handleImageClick = () => {
               </div>
 
               {/* Footer */}
-              <div className="p-6 border-t border-white/10">
-                <div className="flex justify-center space-x-6">
-                  {[
-                    { icon: "📱", label: "App" },
-                    { icon: "💬", label: "Chat" },
-                    { icon: "📧", label: "Email" },
-                    { icon: "📞", label: "Call" },
-                  ].map((item, index) => (
-                    <button
-                      key={index}
-                      className="group flex flex-col items-center space-y-2 p-3 rounded-xl hover:bg-white/10 transition-all duration-300"
-                    >
-                      <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
-                        {item.icon}
-                      </span>
-                      <span className="text-white/70 text-sm group-hover:text-white transition-colors duration-300">
-                        {item.label}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+             
             </div>
           </div>
         )}

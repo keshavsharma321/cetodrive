@@ -1,132 +1,71 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Phone, Mail, Apple, PlayCircle } from "lucide-react"
-import Image from "next/image"
-import { ArrowRight, Check, Menu, X , ChevronDown , MapPin , Clock} from "lucide-react"
-import { useState , useEffect } from "react"
+import React from "react";
+import login from "../../../public/Group 1(4).png";
+import Image from "next/image";
+import Link from "next/link";
+import { Phone, Mail, Apple, PlayCircle , Heart, Star } from "lucide-react"
+import { ArrowRight, Check, Menu, X ,  Fuel, Settings, Users , ChevronDown} from "lucide-react"
+import { useState } from "react"
 import "react-datepicker/dist/react-datepicker.css"
-import background from "../../../public/image(6).png"
+import { useRouter } from 'next/navigation';
+import background from "../../../public/View.png"
 import Img from "../../../public/ImgKe.png"
-import Toyota from "../../../public/Logo.png"
-import Ford from "../../../public/Logo(1).png"
-import Mercedes from "../../../public/Logo(2).png"
-import Jeep from "../../../public/Logo(3).png"
-import BMW from "../../../public/Logo(4).png"
-import Audi from "../../../public/Logo(5).png"
-import { useRouter } from "next/navigation"
+import Profile from "../../../public/Profill.png"
 
-
-export default function Home() {
-
-     const [vehicle, setVehicle] = useState([]);
- 
-      const router = useRouter();
-      const handleClick1 = () => {
-     router.push('/cardetails'); // navigate to /cardetails
-   };
-  useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const data = await getVehicles();
-        setVehicle(data); 
-      } catch (error) {
-        console.error("Error loading vehicles:", error);
-      }
-    };
-  
-    fetchVehicles();
-  }, []);
-
-  const [selectedFilter, setSelectedFilter] = useState(null);
-  const [selectedVehicleType, setSelectedVehicleType] = useState('All vehicles');
-  const [typeFilters, setTypeFilters] = useState({
-    Sport: true,
-    SUV: true,
-    MPV: true,
-    Sedan: false,
-    Coupe: false,
-    Hatchback: false,
-  });
-  const [capacityFilters, setCapacityFilters] = useState({
-    '2 Person': true,
-    '4 Person': false,
-    '6 Person': false,
-    '8 or More': true,
-  });
-  const [priceRange, setPriceRange] = useState(80);
-  const [selectedBrand, setSelectedBrand] = useState('All');
-  const [vehicles, setVehicles] = useState([
-    { brand: "Mercedes", price: 25, model: "Sedan", type: "Sedan", capacity: 4 },
-    { brand: "Mercedes", price: 50, model: "Sport", type: "Sport", capacity: 2 },
-    { brand: "Mercedes", price: 45, model: "SUV", type: "SUV", capacity: 6 },
-    { brand: "Porsche", price: 40, model: "Sport", type: "Sport", capacity: 2 },
-    { brand: "Toyota", price: 35, model: "MPV", type: "MPV", capacity: 8 },
-    { brand: "Porsche", price: 50, model: "SUV", type: "SUV", capacity: 4 },
-  ]);
-
-  const handleFilterClick = (filter) => {
-    setSelectedFilter(prevFilter => prevFilter === filter ? null : filter);
-  };
-
-  const handleVehicleTypeClick = (type) => {
-    setSelectedVehicleType(type);
-  };
-
-
-const handleImageClick = () => {
-    navigate('/Cardetails');
-  };
-
-  const handleTypeFilterChange = (filterName) => {
-    setTypeFilters(prevFilters => ({
-      ...prevFilters,
-      [filterName]: !prevFilters[filterName],
-    }));
-  };
-
-  const handleCapacityFilterChange = (filterName) => {
-    setCapacityFilters(prevFilters => ({
-      ...prevFilters,
-      [filterName]: !prevFilters[filterName],
-    }));
-  };
-
-  const getBrands = () => ['All', ...new Set(vehicles.map(v => v.brand))];
-
-  const filteredVehicles = vehicles.filter(vehicle => {
-    const typeMatch = selectedVehicleType === 'All vehicles' || vehicle.type === selectedVehicleType;
-    const brandMatch = selectedBrand === 'All' || vehicle.brand === selectedBrand;
-    const priceMatch = vehicle.price <= priceRange;
-    const capacityMatch = (
-      (capacityFilters['2 Person'] && vehicle.capacity === 2) ||
-      (capacityFilters['4 Person'] && vehicle.capacity === 4) ||
-      (capacityFilters['6 Person'] && vehicle.capacity === 6) ||
-      (capacityFilters['8 or More'] && vehicle.capacity >= 8)
-    );
-    const typeFilterMatch = typeFilters[vehicle.type];
-
-    return typeMatch && brandMatch && priceMatch && capacityMatch && typeFilterMatch;
-  });
-
-  
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+export default function LoginPage() {
+   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter(); // initialize router
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
 
+      const handlesignup = () => {
+      router.push('/signup'); // navigate to /cardetails
+    };
+   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await fetch("http://143.110.242.217:8031/api/customer/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Login successful:", data);
+        alert("Login successfully");
+        router.push('/profile'); 
+      } else {
+        console.error("Login failed:", data);
+        // Show error message
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* Hero Section with Background */}
-       <div className="relative w-full min-h-[600px] md:min-h-[700px] lg:h-screen bg-[#0f172a] overflow-hidden">
-        <Image src={background || "/placeholder.svg"} alt="Hero background" fill className="object-cover" priority />
+    <div className="w-full min-h-screen  bg-white">
+
+       <div className="relative w-full shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] lg:h-full bg-[white] overflow-hidden">
 
         {/* Header/Navigation */}
         <header className="relative z-10 flex flex-wrap items-center justify-between w-full px-4 py-4 sm:px-6 lg:px-20">
           <div className="flex items-center">
-            <Link href="/" className="text-white text-2xl sm:text-3xl font-bold">
+            <Link href="/" className="text-gray-900 text-2xl sm:text-5xl font-bold">
               CatoDrive
             </Link>
           </div>
@@ -136,42 +75,42 @@ const handleImageClick = () => {
           {/* Desktop Navigation */}
           <div className=" items-center flex justify-end space-x-4 lg:space-x-6">
             <div className="hidden md:flex space-x-2">
-              <Link href="#" className="bg-white/10 rounded-md p-2 text-white 
+              <Link href="#" className="bg-black rounded-xl p-2 text-white 
  transition">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
               </Link>
 
-              <Link href="#" className="bg-white/10 rounded-md p-2 text-white 
+              <Link href="#" className="bg-black rounded-xl p-2 text-white 
  transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
                 </svg>
               </Link>
 
-              <Link href="#" className="bg-white/10 rounded-md p-2 text-white 
+              <Link href="#" className="bg-black rounded-xl p-2 text-white 
  transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
               </Link>
 
-              <Link href="#" className="bg-white/10 rounded-md p-2 text-white 
+              <Link href="#" className="bg-black rounded-xl p-2 text-white 
  transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                 </svg>
               </Link>
 
-              <Link href="#" className="bg-white/10 rounded-md p-2 text-white 
+              <Link href="#" className="bg-black rounded-xl p-2 text-white 
  transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                 </svg>
               </Link>
 
-              <Link href="#" className="bg-white/10 rounded-md p-2 text-white 
+              <Link href="#" className="bg-black rounded-xl p-2 text-white 
  transition">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.162 0h-3.837l-5.504 7.426-5.01-7.426h-4.062l7.596 11.152-7.879 10.848h3.861l5.786-8.027 5.422 8.027h4.038l-7.901-11.176z" />
@@ -180,7 +119,7 @@ const handleImageClick = () => {
             </div>
 
              {/* Mobile menu button */}
-          <button className="text-white p-2 rounded-md" onClick={toggleMobileMenu}>
+          <button className="text-black p-2 rounded-xl" onClick={toggleMobileMenu}>
             <Menu className="w-10 h-10" />
           </button>
 
@@ -194,12 +133,12 @@ const handleImageClick = () => {
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-20 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse"></div>
               <div className="absolute bottom-32 right-16 w-40 h-40 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
+              <div className="absolute top-2/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500 rounded-full blur-3xl animate-pulse delay-500"></div>
             </div>
 
 <div className="relative flex flex-col max-h-screen overflow-y-auto">
               {/* Header with Close Button */}
-              <div className="flex justify-between items-center p-6 border-b border-white/10">
+              <div className="flex justify-between items-center p-6 border-b border-black">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-lg">C</span>
@@ -208,7 +147,7 @@ const handleImageClick = () => {
                 </div>
 
                 <button
-                  className="group relative w-12 h-12 bg-white/10 
+                  className="group relative w-12 h-12 bg-black 
  rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
                   onClick={toggleMobileMenu}
                 >
@@ -231,13 +170,12 @@ const handleImageClick = () => {
                 {/* Navigation Links */}
                <nav className="space-y-6 text-center">
   {[
-    { href: "/", label: "Home" },
+   { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
     { href: "/contactus", label: "Contact" },
     { href: "/vehicle", label: "Vehicle" },
     { href: "/availablevehicle", label: "Available Vehicle" },
     { href: "/popularcars", label: "Popular Cars" },
-
   ].map((item, index) => (
     <Link
       key={item.href}
@@ -246,7 +184,10 @@ const handleImageClick = () => {
       onClick={toggleMobileMenu}
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 hover:bg-white/10 border border-orange-500 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
+      <div className="flex items-center justify-center space-x-4 py-4 px-8 rounded-2xl bg-white/5 
+                View Details
+              </button>
+ border border-orange-500 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20 animate-slide-up">
         <span className="text-2xl">{item.icon}</span>
         <span className="text-2xl font-semibold text-orange-500 group-hover:text-orange-400 transition-colors duration-300">
           {item.label}
@@ -270,184 +211,111 @@ const handleImageClick = () => {
 
         </header>
 
-        {/* Hero Content */}
-        <div className="relative z-5 w-full flex flex-col h-full mt-20 lg:mt-0 justify-center items-center px-4 sm:px-6 lg:px-20 pb-16 md:pb-24 pt-16 md:pt-0">
- <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white mt-8 md:mt-16 mb-4 text-center"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-          >
-            Popular Picks <span className="text-[#ea580c]"> - Trusted by</span> 
-          </h1>
-
-          <p className="text-[#ea580c] text-4xl sm:text-4xl font-bold md:text-6xl lg:text-8xl max-w-4xl mb-8 md:mb-16 text-center">
-Thousands       </p>
-
-
-
-        </div>
       </div>
 
-<div className="container mx-auto p-4 sm:p-6 mt-16 max-w-8xl">
-      <div className="mb-8">
-        <h1 className="text-xl sm:text-4xl font-bold text-black mb-4 sm:mb-6 text-center">Available Vehicles</h1>
+      <div className="flex">
 
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
-          {['Location', 'Price', 'Time Duration', 'Brand', 'Filter'].map((filter) => (
-            <button
-              key={filter}
-              className={`px-3 sm:px-4 py-1 sm:py-2 border rounded-md flex items-center gap-2 text-xs sm:text-sm whitespace-nowrap ${
-                selectedFilter === filter ? 'bg-blue-600 text-white border-blue-600' : 'border-gray-300 text-gray-700'
-              }`}
-              onClick={() => handleFilterClick(filter)}
-            >
-              <span className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full ${selectedFilter === filter ? 'bg-white' : 'bg-gray-400'}`}></span>
-              {filter}
-            </button>
-          ))}
-        </div>
+              {/* Left side - Full Image */}
+<div className="w-1/2 ml-20 relative px-40 flex justify-center items-center content-center py-20">
+    {/* Container with height so fill works */}
+    <div className="relative w-full h-full rounded-lg overflow-hidden">
+      <Image
+        src={login}
+        alt="Login Side Image"
+        // fill
+        className="object-cover"
+        priority
+      />
+    </div>
+  </div>
 
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-          {['All vehicles', 'Sedan', 'Cabriolet', 'Pickup', 'SUV', 'Minivan'].map((type) => (
-            <button 
-              key={type} 
-              className={`px-4 sm:px-6 py-1 sm:py-2 rounded-full text-xs sm:text-sm whitespace-nowrap ${
-                selectedVehicleType === type ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'
-              }`}
-              onClick={() => handleVehicleTypeClick(type)}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
-        {/* <select
-          className="px-3 sm:px-4 py-1 sm:py-2 border rounded-md text-xs sm:text-sm"
-          value={selectedBrand}
-          onChange={(e) => setSelectedBrand(e.target.value)}
-        >
-          {getBrands().map(brand => (
-            <option key={brand} value={brand}>{brand}</option>
-          ))}
-        </select> */}
+      {/* Right side - Login form */}
+      <div className="w-1/2 flex items-center justify-center px-6 lg:px-16 xl:px-24">
+        <div className="w-full max-w-md ">
+          {/* Welcome text */}
+          <h1 className="text-5xl flex items-center justify-center font-bold text-[#FF7A30] mb-2">Welcome back</h1>
+          <p className="text-gray-500 flex self-center items-center justify-center text-lg mb-8">
+            We&apos;ve missed you! Please log in to catch up on what you&apos;ve missed
+          </p>
+
+          {/* Google login button */}
+          <button className="w-full border rounded-xl border-gray-300  py-3 flex items-center justify-center gap-2 mb-6 hover:bg-gray-50 transition-colors">
+            {/* Google SVG Icon */}
+            <svg width="18" height="18" viewBox="0 0 48 48">
+              <path fill="#FFC107" d="M43.611,20.083H42V20H24v8..." />
+              <path fill="#FF3D00" d="M6.306,14.691l6.571..." />
+              <path fill="#4CAF50" d="M24,44c5.166,0..." />
+              <path fill="#1976D2" d="M43.611,20.083H42..." />
+            </svg>
+            <span className="text-md rou font-medium text-gray-700">Log in with Google</span>
+          </button>
+
+          <div className="flex items-center justify-center mb-2">
+            <span className="text-md text-gray-400">or</span>
+          </div>
+
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="text-black">
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF7A30] focus:border-transparent"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-        <div className="w-full lg:w-64 flex-shrink-0 bg-white shadow-md lg:shadow-lg rounded-lg p-4 lg:p-6 border border-gray-200">
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xs text-gray-500 mb-3">TYPE</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
-                {Object.entries(typeFilters).map(([name, checked]) => (
-                  <label key={name} className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      checked={checked} 
-                      className="form-checkbox h-4 w-4 text-blue-600"
-                      onChange={() => handleTypeFilterChange(name)}
-                    />
-                    <span className="text-sm text-black">{name}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+      <div className="mb-6">
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF7A30] focus:border-transparent"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
 
-            <div>
-              <h3 className="text-xs text-gray-500 mb-3">CAPACITY</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
-                {Object.entries(capacityFilters).map(([name, checked]) => (
-                  <label key={name} className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      checked={checked} 
-                      className="form-checkbox h-4 w-4 text-blue-600"
-                      onChange={() => handleCapacityFilterChange(name)}
-                    />
-                    <span className="text-sm text-black">{name}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <input type="checkbox" id="remember" className="h-4 w-4 text-[#FF7A30] border-gray-300 rounded" />
+          <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">Remember Me</label>
+        </div>
+        <a href="#" className="text-sm text-[#FF7A30] hover:underline">Forgot Password</a>
+      </div>
 
-            <div>
-              <h3 className="text-xs text-gray-500 mb-3">PRICE</h3>
-              <input 
-                type="range" 
-                min="0" 
-                max="100" 
-                value={priceRange}
-                onChange={(e) => setPriceRange(Number(e.target.value))}
-                className="w-full"
-              />
-              <div className="text-sm text-black mt-2">Max. ${priceRange}.00</div>
-            </div>
+      <button
+        type="submit"
+        className="w-full bg-[#FF7A30] text-white py-3 rounded-xl hover:bg-[#e86e29] transition-colors font-medium"
+      >
+        Log in
+      </button>
+    </form>
+
+          <div className="text-center mt-6">
+            <p className="text-md text-gray-600">
+              Don&apos;t have an account yet?
+              <a href="#" onClick={handlesignup} className="text-[#FF7A30] hover:underline ml-1">Sign up</a>
+            </p>
           </div>
         </div>
-
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {filteredVehicles.map((vehicle, index) => (
-            <div
-              key={index}
-              className="bg-gray-50 rounded-lg p-4 sm:p-6 space-y-3 sm:space-y-4"
-            >
-              <div className="aspect-[16/9] relative rounded-lg overflow-hidden bg-gray-100"     onClick={() => handleImageClick()}>
-                <Image
-                  src={Img}
-                  alt={`${vehicle.brand} ${vehicle.model}`}
-                  className="w-full h-full object-contain "
-                />
-              </div>
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-semibold text-gray-900">{vehicle.brand}</h3>
-                  <p className="text-xs sm:text-sm text-gray-900">{vehicle.model}</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-[#3563e9] font-semibold">
-                    ${vehicle.price}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-500">per day</div>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
-                <div className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 rounded-full"></span>
-                  <span>Automatic</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 rounded-full"></span>
-                  <span>{vehicle.capacity} Person</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 rounded-full"></span>
-                  <span>Air Conditioner</span>
-                </div>
-              </div>
-                <button onClick={handleClick1}  className="w-full cursor-pointer bg-[#3563e9] text-white py-2 rounded-md text-sm">
-                View Details
-              </button>
-
-            </div>
-          ))}
-        </div>
       </div>
-      <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 lg:gap-20 pt-20 pb-20">
-          <Image src={Toyota} alt="Toyota" className="h-6 sm:h-8 md:h-10 opacity-50 hover:opacity-100 transition-opacity" />
-          <Image src={Ford} alt="Ford" className="h-6 sm:h-8 md:h-10 opacity-50 hover:opacity-100 transition-opacity" />
-          <Image src={Mercedes} alt="Mercedes" className="h-6 sm:h-8 md:h-10 opacity-50 hover:opacity-100 transition-opacity" />
-          <Image src={Jeep} alt="Jeep" className="h-6 sm:h-8 md:h-10 opacity-50 hover:opacity-100 transition-opacity" />
-          <Image src={BMW} alt="BMW" className="h-6 sm:h-8 md:h-10 opacity-50 hover:opacity-100 transition-opacity" />
-          <Image src={Audi} alt="Audi" className="h-6 sm:h-8 md:h-10 opacity-50 hover:opacity-100 transition-opacity" />
-        </div>
-    </div>
+      </div>
 
 
 
-      {/* Rent/Host Section */}
-
-      {/* Footer */}
-      <div className="bg-[#0a0c17] text-white">
+        <div className="bg-[#0a0c17] text-white">
         <main className="container mx-auto px-4 py-12">
           {/* Main content section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-22 mb-16">
             {/* Left column */}
             <div>
               <h1 className="text-2xl font-bold mb-2">CatoDrive</h1>
@@ -456,14 +324,14 @@ Thousands       </p>
               </p>
 
               <div className="space-y-3">
-                <div className="flex items-center bg-[#111327] rounded-md p-2 max-w-xs">
+                <div className="flex items-center bg-[#111327] rounded-xl p-2 max-w-xs">
                   <div className="bg-transparent p-2 mr-2">
                     <Phone size={18} className="text-gray-400" />
                   </div>
                   <input type="text" placeholder="+XXXXXXXXX" className="bg-transparent outline-none w-full text-sm" />
                 </div>
 
-                <div className="flex items-center bg-[#111327] rounded-md p-2 max-w-xs">
+                <div className="flex items-center bg-[#111327] rounded-xl p-2 max-w-xs">
                   <div className="bg-transparent p-2 mr-2">
                     <Mail size={18} className="text-gray-400" />
                   </div>
@@ -486,10 +354,10 @@ Thousands       </p>
                   <label htmlFor="email" className="text-xs block mb-1">
                     Your email address
                   </label>
-                  <input type="email" id="email" className="w-full bg-[#111327] rounded-md p-3 outline-none text-sm" />
+                  <input type="email" id="email" className="w-full bg-[#111327] rounded-xl p-3 outline-none text-sm" />
                 </div>
 
-                <button className="w-full bg-[#3b5bf5] hover:bg-[#2a4ae0] text-white py-3 rounded-md transition-colors">
+                <button className="w-full bg-[#3b5bf5] hover:bg-[#2a4ae0] text-white py-3 rounded-xl transition-colors">
                   Sign Up
                 </button>
               </div>
@@ -722,5 +590,5 @@ Thousands       </p>
         </main>
       </div>
     </div>
-  )
+  );
 }

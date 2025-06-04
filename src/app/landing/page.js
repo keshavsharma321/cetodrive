@@ -15,6 +15,29 @@ export default function Home() {
   const [location, setLocation] = useState("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const router = useRouter();
+//    const [cars, setCars] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState("");
+
+//   useEffect(() => {
+//     axios
+//       .get("http://143.110.242.217:8031/api/vehicle/vehicle/")
+//       .then((response) => {
+//         setCars(response.data);
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         setError("Failed to load vehicle data.");
+//         setLoading(false);
+//       });
+//   }, []);
+
+//   const Spec = ({ icon, label }) => (
+//   <div className="text-center text-sm">
+//     <div className="text-xl">{icon}</div>
+//     <div className="mt-1 text-black">{label}</div>
+//   </div>
+// );
 
   const handleClick = () => {
     router.push('/cardetails'); // navigate to /cardetails
@@ -384,6 +407,77 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+       {/* <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <h2
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-4"
+        >
+          Popular Cars
+        </h2>
+        <p
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          className="text-[#0f172a] mb-8 font-montserrat"
+        >
+          <span className="border-b-2 border-blue-500 pb-1">Browse</span> our top
+          selection of vehicles available for rent.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {cars.map((car) => (
+            <div
+              key={car.id}
+              className="border rounded-xl shadow-sm hover:shadow-md transition overflow-hidden bg-white"
+            >
+              <div className="relative">
+                <img
+                  src={car.image || "https://via.placeholder.com/300x200"}
+                  alt={car.name}
+                  className="w-full h-40 sm:h-48 object-cover"
+                />
+                <button className="absolute top-4 right-4 bg-white p-2 rounded-md shadow">
+                  <svg
+                    className="w-5 h-5 text-red-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="p-4 text-black">
+                <h3 className="text-lg font-bold">{car.name}</h3>
+                <p className="text-sm text-gray-600">{car.description}</p>
+
+                <div className="flex justify-between mt-3 border-y border-gray-200 py-3">
+                  <Spec icon="👥" label={`${car.seat || "5"} Seats`} />
+                  <Spec icon="⛽" label={car.fuel || "Petrol"} />
+                  <Spec icon="⚙️" label={car.transmission || "Manual"} />
+                </div>
+
+                <div className="flex justify-between items-center mt-4">
+                  <p className="text-xl font-bold">${car.price_per_day || "25"}/day</p>
+                  <button
+                    onClick={() => handleClick(car.name)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition"
+                  >
+                    Book Now!
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section> */}
 
       {/* Popular Cars Section */}
       <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">

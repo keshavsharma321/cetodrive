@@ -4,44 +4,41 @@ import Link from "next/link"
 import { Phone, Mail, Apple, PlayCircle, Navigation } from "lucide-react"
 import Image from "next/image"
 import { ArrowRight, Calendar, Check, MapPin, Menu  , X} from "lucide-react"
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { useRouter } from 'next/navigation';
 import background from "../../../public/backgorund.jpg"
+import axios from "axios"
 export default function Home() {
   const [pickupDate, setPickupDate] = useState(new Date())
   const [returnDate, setReturnDate] = useState(new Date(new Date().setDate(new Date().getDate() + 1)))
   const [location, setLocation] = useState("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const router = useRouter();
-//    const [cars, setCars] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState("");
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-//   useEffect(() => {
-//     axios
-//       .get("http://143.110.242.217:8031/api/vehicle/vehicle/")
-//       .then((response) => {
-//         setCars(response.data);
-//         setLoading(false);
-//       })
-//       .catch((err) => {
-//         setError("Failed to load vehicle data.");
-//         setLoading(false);
-//       });
-//   }, []);
 
-//   const Spec = ({ icon, label }) => (
-//   <div className="text-center text-sm">
-//     <div className="text-xl">{icon}</div>
-//     <div className="mt-1 text-black">{label}</div>
-//   </div>
-// );
 
-  const handleClick = () => {
-    router.push('/cardetails'); // navigate to /cardetails
-  };
+
+  useEffect(() => {
+    axios
+      .get("http://143.110.242.217:8031/api/vehicle/vehicle/")
+      .then((response) => {
+        setCars(response.data.data || []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("API Error:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleClick = (id) => {
+  console.log(id)  
+  router.push(`/cardetails?id=${id}`);
+};
 
    const handleClick1 = () => {
     router.push('/vehicle'); // navigate to /cardetails
@@ -480,295 +477,121 @@ export default function Home() {
     </section> */}
 
       {/* Popular Cars Section */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-            className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-4"
-          >
-            Popular Cars
-          </h2>
-          <p style={{ fontFamily: "var(--font-space-grotesk)" }} className="text-[#0f172a] mb-8 font-montserrat">
-            <span className="border-b-2 border-blue-500 pb-1">Browse</span> our top selection of vehicles available for
-            rent.
-          </p>
+     <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <h2
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-4"
+        >
+          Popular Cars
+        </h2>
+        <p
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          className="text-[#0f172a] mb-8 font-montserrat"
+        >
+          <span className="border-b-2 border-blue-500 pb-1">Browse</span> our top selection of vehicles available for
+          rent.
+        </p>
 
+        {loading ? (
+          <p className="text-center text-gray-500">Loading cars...</p>
+        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {/* Car Card 1 */}
-            <div className="border rounded-lg overflow-hidden bg-white">
-              <div className="relative">
-                <img src="Container.png" alt="T-Cross" className="w-full h-40 sm:h-48 object-cover" />
-                <button className="absolute top-4 right-4 bg-white p-2 rounded-md">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-
-              <div className="p-4 text-black">
-                <h3 className="text-lg font-bold text-black">T-Cross - 2023</h3>
-                <p className="text-sm text-gray-600">4.0 DS PowerPulse Momentum 5dr AWD</p>
-
-                <div className="flex justify-between mt-2 border-y border-gray-300 py-2">
-                  <div className="text-center">
-                    <svg className="w-5 h-5 mx-auto text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {cars.map((car) => (
+              <div key={car.id} className="border rounded-lg overflow-hidden bg-white">
+                <div className="relative">
+                  <img
+                    src={`http://143.110.242.217:8031${car.images?.[1]?.image || car.images?.[0]?.image || ""}`}
+                    alt={car.vehicle_model || "Car"}
+                    className="w-full h-40 sm:h-48 object-cover"
+                  />
+                  <button className="absolute top-4 right-4 bg-white p-2 rounded-md">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                       ></path>
                     </svg>
-                    <p className="text-sm mt-1 text-black">5 Seats</p>
-                  </div>
-
-                  <div className="text-center">
-                    <svg className="w-5 h-5 mx-auto text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm mt-1 text-black">Petrol</p>
-                  </div>
-
-                  <div className="text-center">
-                    <svg className="w-5 h-5 mx-auto text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                      ></path>
-                    </svg>
-                    <p className="text-sm mt-1 text-black">CVT</p>
-                  </div>
+                  </button>
                 </div>
 
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-xl font-bold text-black">$45/day</p>
-                  <button  onClick={handleClick}   className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Book Now !</button>
-                </div>
-              </div>
-            </div>
+                <div className="p-4 text-black">
+                  <h3 className="text-lg font-bold text-black">
+                    {car.vehicle_model || "Unknown Model"} - 2023
+                  </h3>
+                  <p className="text-sm text-gray-600">4.0 DS PowerPulse Momentum 5dr AWD</p>
 
-            {/* Car Card 2 */}
-            <div className="border rounded-lg overflow-hidden bg-white">
-              <div className="relative">
-                <img src="Link.png" alt="C-Class" className="w-full h-40 sm:h-48 object-cover" />
-                <button className="absolute top-4 right-4 bg-white p-2 rounded-md">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
+                  <div className="flex justify-between mt-2 border-y border-gray-300 py-2">
+                    <div className="text-center">
+                      <svg className="w-5 h-5 mx-auto text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                        ></path>
+                      </svg>
+                      <p className="text-sm mt-1 text-black">
+                        {car.vehicle_seat?.capacity || "N/A"} Seats
+                      </p>
+                    </div>
 
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-[#0f172a]">C-Class - 2023</h3>
-                <p className="text-sm text-gray-600">4.0 DS PowerPulse Momentum 5dr AWD</p>
+                    <div className="text-center">
+                      <svg className="w-5 h-5 mx-auto text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                        ></path>
+                      </svg>
+                      <p className="text-sm mt-1 text-black">{car.fuel || "N/A"}</p>
+                    </div>
 
-                <div className="flex justify-between mt-2 border-y border-gray-300 py-2">
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">5 Seats</p>
+                    <div className="text-center">
+                      <svg className="w-5 h-5 mx-auto text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                        ></path>
+                      </svg>
+                      <p className="text-sm mt-1 text-black">{car.gear_box || "N/A"}</p>
+                    </div>
                   </div>
 
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">Petrol</p>
-                  </div>
+                  <div className="flex justify-between items-center mt-4">
+                    <p className="text-xl font-bold text-black">
+                      ₹{car.price || "N/A"}/day
+                    </p>
+                    <button
+                       onClick={() => handleClick(car.id)}
 
-                  <div className="text-center">
-                    <svg className="w-5 text-black h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">Automatic</p>
+                      className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm"
+                    >
+                      Book Now !
+                    </button>
                   </div>
-                </div>
-
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-xl font-bold text-[#0f172a]">$15/day</p>
-                  <button  onClick={handleClick}   className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Book Now !</button>
                 </div>
               </div>
-            </div>
-
-            {/* Car Card 3 */}
-            <div className="border rounded-lg overflow-hidden bg-white">
-              <div className="relative">
-                <img src="/Container(1).png" alt="Ford Transit" className="w-full h-40 sm:h-48 object-cover" />
-                <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 text-sm rounded-md">
-                  Great Price
-                </div>
-                <button className="absolute top-4 right-4 bg-white p-2 rounded-md">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-[#0f172a]">Ford Transit - 2021</h3>
-                <p className="text-sm text-gray-600">4.0 DS PowerPulse Momentum 5dr AWD</p>
-
-                <div className="flex justify-between mt-2 border-y border-gray-300 py-2">
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">5 Seats</p>
-                  </div>
-
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">Diesel</p>
-                  </div>
-
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">Manual</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-xl font-bold text-[#0f172a]">$25/day</p>
-                  <button  onClick={handleClick}   className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Book Now !</button>
-                </div>
-              </div>
-            </div>
-
-            {/* Car Card 4 */}
-            <div className="border rounded-lg overflow-hidden bg-white">
-              <div className="relative">
-                <img src="/Container(2).png" alt="New GLC" className="w-full h-40 sm:h-48 object-cover" />
-                <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 text-sm rounded-md">
-                  Low Mileage
-                </div>
-                <button className="absolute top-4 right-4 bg-white p-2 rounded-md">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-[#0f172a]">New GLC - 2023</h3>
-                <p className="text-sm text-gray-600">4.0 DS PowerPulse Momentum 5dr AWD</p>
-
-                <div className="flex justify-between mt-2 border-y border-gray-300 py-2">
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">5 Seats</p>
-                  </div>
-
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">Petrol</p>
-                  </div>
-
-                  <div className="text-center">
-                    <svg className="w-5 h-5 text-black mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                      ></path>
-                    </svg>
-                    <p className="text-sm text-black mt-1">Automatic</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mt-4">
-                  <p className="text-xl font-bold text-[#0f172a]">$95/day</p>
-                  <button  onClick={handleClick}   className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">Book Now !</button>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
+        )}
 
-          <div className="flex justify-center mt-8 md:mt-10">
-            <button onClick={handleClick1}  className="flex cursor-pointer items-center gap-2 px-6 py-3 bg-white text-[#ea580c] font-semibold rounded-full shadow-md hover:shadow-lg transition-shadow">
-              See All
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+        <div className="flex justify-center mt-8 md:mt-10">
+          <button
+            onClick={handleClick1}
+            className="flex cursor-pointer items-center gap-2 px-6 py-3 bg-white text-[#ea580c] font-semibold rounded-full shadow-md hover:shadow-lg transition-shadow"
+          >
+            See All
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Why Choose Us Section */}
       <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50">

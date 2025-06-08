@@ -4,70 +4,79 @@ import Link from "next/link"
 import { Phone, Mail, Apple, PlayCircle , Heart, Star } from "lucide-react"
 import Image from "next/image"
 import { ArrowRight, Check, Menu, X ,  Fuel, Settings, Users , ChevronDown} from "lucide-react"
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import background from "../../../public/View.png"
 import Img1 from "../../../public/View 1.png"
 import Img2 from "../../../public/View 2.png"
 import Img3 from "../../../public/View 3.png"
-
+import { useSearchParams } from "next/navigation"
 import Profile from "../../../public/Profill.png"
  import { useRouter } from "next/navigation"
+ import axios from "axios"
 export default function Home() {
- const handleImageClick = () => {
-    console.log("Image clicked")
-  }
+ const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const router = useRouter();
+  const [vehicle, setVehicles] = useState({});
+  const [loading, setLoading] = useState(true);
+ console.log("keshav",id)
 
-   const images = [
+ useEffect(() => {
+    axios
+      .get(`http://143.110.242.217:8031/api/vehicle/vehicle/${id}`)
+      .then((response) => {
+        console.log("API Response:", response.data.data);
+        setVehicles(response.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("API Error:", error);
+        setLoading(false);
+      });
+  }, [id]);
+
+   useEffect(() => {
+    console.log("Updated vehicle state:", vehicle);
+  }, [vehicle]);
+
+  const images = [
     Img1 , Img2 , Img3
   ];
  
-       const router = useRouter();
-           const handleClick1 = () => {
-      router.push('/billing'); // navigate to /cardetails
+      
+    const handleClick1 = () => {
+      router.push('/billing'); 
     };
 
   const handleRentNow = () => {
     console.log("Rent now clicked")
   }
 
-    const [vehicles, setVehicles] = useState([
+    const vehicles = [
     { brand: "Mercedes", price: 25, model: "Sedan", type: "Sedan", capacity: 4 },
     { brand: "Mercedes", price: 50, model: "Sport", type: "Sport", capacity: 2 },
     { brand: "Mercedes", price: 45, model: "SUV", type: "SUV", capacity: 6 },
     { brand: "Porsche", price: 40, model: "Sport", type: "Sport", capacity: 2 },
     { brand: "Toyota", price: 35, model: "MPV", type: "MPV", capacity: 8 },
     { brand: "Porsche", price: 50, model: "SUV", type: "SUV", capacity: 4 },
-  ]);
+  ];
 
  
 const [selectedImage, setSelectedImage] = useState(0)
 
-  const carImages = [
-    "/placeholder.svg?height=200&width=300",
-    "/placeholder.svg?height=200&width=300",
-    "/placeholder.svg?height=200&width=300",
-  ]
+  
 
   const reviews = [
     {
       id: 1,
-      name: "Lorem Ipsum",
-      username: "Lorem Ipsum",
+      name: "Jai Vats",
+      username: "jai_2103",
       date: "21 July 2025",
       rating: 4,
       avatar: "/placeholder.svg?height=40&width=40",
-      text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-    },
-    {
-      id: 2,
-      name: "Lorem Ipsum",
-      username: "Lorem Ipsum",
-      date: "20 July 2025",
-      rating: 4,
-      avatar: "/placeholder.svg?height=40&width=40",
-      text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-    },
+      text: "I really enjoyed using this product.",
+    }
   ]
 
   const StarRating = ({ rating }) => {
@@ -85,7 +94,12 @@ const [selectedImage, setSelectedImage] = useState(0)
       </div>
     )
   }
+
   
+  
+const handleImageClick = () => {
+    console.log("Image clicked")
+  }
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 

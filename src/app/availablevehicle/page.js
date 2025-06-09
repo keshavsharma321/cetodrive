@@ -323,7 +323,7 @@ export default function Home() {
                 onChange={(e) => setPriceRange(Number(e.target.value))}
                 className="w-full"
               />
-              <div className="text-sm text-black mt-2">Max. ₹{priceRange}</div>
+              <div className="text-sm text-black mt-2">Max. ${priceRange}</div>
             </div>
           </div>
         </div>
@@ -345,7 +345,7 @@ export default function Home() {
                   <p className="text-xs sm:text-sm text-gray-900">{vehicle.vehicle_type?.name || "Unknown Type"}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-[#3563e9] font-semibold">₹{vehicle.price}</div>
+                  <div className="text-[#3563e9] font-semibold">${vehicle.price}</div>
                   <div className="text-xs sm:text-sm text-gray-500">per day</div>
                 </div>
               </div>

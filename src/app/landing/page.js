@@ -525,7 +525,7 @@ export default function Home() {
 
                   <div className="flex justify-between items-center mt-4">
                     <p className="text-xl font-bold text-black">
-                      ₹{car.price || "N/A"}/day
+                      ${car.price || "N/A"}/day
                     </p>
                     <button
                        onClick={() => handleClick(car.id)}

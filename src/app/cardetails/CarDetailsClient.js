@@ -307,10 +307,10 @@ export default function Home() {
               <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                 <div>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-gray-900">₹{vehicle?.price || "0"}/</span>
+                    <span className="text-3xl font-bold text-gray-900">${vehicle?.price || "0"}/</span>
                     <span className="text-gray-500">day</span>
                   </div>
-                  <span className="text-gray-400 line-through">₹{Number.parseInt(vehicle?.price || "0") + 200}</span>
+                  <span className="text-gray-400 line-through">${Number.parseInt(vehicle?.price || "0") + 200}</span>
                 </div>
                 <button
                   onClick={handleClick1}

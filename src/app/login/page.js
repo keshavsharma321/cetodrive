@@ -173,9 +173,10 @@ export default function LoginPage() {
    { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
     { href: "/contactus", label: "Contact" },
-    { href: "/vehicle", label: "Vehicle" },
+    
+
     { href: "/availablevehicle", label: "Available Vehicle" },
-    { href: "/popularcars", label: "Popular Cars" },
+
   ].map((item, index) => (
     <Link
       key={item.href}

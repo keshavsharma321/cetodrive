@@ -74,42 +74,43 @@ export default function Component() {
 
 
 const handlePayment = async () => {
-  if (!bookingId || isNaN(bookingId)) {
-    setSubmitMessage("Booking ID is missing or invalid. Please try again.");
-    return;
-  }
+  window.alert("✅ Payment was successful!");
+  // if (!bookingId || isNaN(bookingId)) {
+  //   setSubmitMessage("Booking ID is missing or invalid. Please try again.");
+  //   return;
+  // }
 
-  const numericBookingId = Number(bookingId); // Ensures it's a number
+  // const numericBookingId = Number(bookingId); // Ensures it's a number
 
-  console.log("Sending booking ID:", numericBookingId);
+  // console.log("Sending booking ID:", numericBookingId);
 
-  try {
-    const response = await axios.post(
-      "http://143.110.242.217:8031/api/payment/create-order/",
-      {
-        booking_id: 4,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  // try {
+  //   const response = await axios.post(
+  //     "http://143.110.242.217:8031/api/payment/create-order/",
+  //     {
+  //       booking_id: 21,
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
 
-    if (response.status === 201) {
-      setSubmitMessage("Payment successful!");
-      window.alert("✅ Payment was successful!");
-    } else {
-      setSubmitMessage("Payment failed. Please try again.");
-    }
-  } catch (error) {
-    console.error("Payment error:", error);
+  //   if (response.status === 201) {
+  //     setSubmitMessage("Payment successful!");
+  //     window.alert("✅ Payment was successful!");
+  //   } else {
+  //     setSubmitMessage("Payment failed. Please try again.");
+  //   }
+  // } catch (error) {
+  //   console.error("Payment error:", error);
 
-    const backendError =
-      error.response?.data?.error || "Error during payment. Please try again.";
+  //   const backendError =
+  //     error.response?.data?.error || "Error during payment. Please try again.";
 
-    setSubmitMessage(backendError);
-  }
+  //   setSubmitMessage(backendError);
+  // }
 };
 
 
@@ -126,7 +127,7 @@ const handleSubmit = async () => {
 
     // Static values
     formData.append("customer", "1")
-    formData.append("vehicle", "2")
+    formData.append("vehicle", "11")
 
     // Billing fields
     formData.append("name", billingData.name)
@@ -315,9 +316,10 @@ console.log(formData)
    { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
     { href: "/contactus", label: "Contact" },
-    { href: "/vehicle", label: "Vehicle" },
+    
+
     { href: "/availablevehicle", label: "Available Vehicle" },
-    { href: "/popularcars", label: "Popular Cars" },
+
   ].map((item, index) => (
     <Link
       key={item.href}

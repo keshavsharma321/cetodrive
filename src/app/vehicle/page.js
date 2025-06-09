@@ -223,9 +223,10 @@ export default function Home() {
   { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
     { href: "/contactus", label: "Contact" },
-    { href: "/vehicle", label: "Vehicle" },
+    
+
     { href: "/availablevehicle", label: "Available Vehicle" },
-    { href: "/popularcars", label: "Popular Cars" },
+
   ].map((item, index) => (
     <Link
       key={item.href}
@@ -382,7 +383,7 @@ export default function Home() {
               </div>
               <div className="flex justify-between items-center">
                 <div>
-                  <h3 className="font-semibold text-gray-900">{vehicle.vehicle_model || "Unknown Model"}</h3>
+                  <h3 className="font-semibold text-gray-900">{vehicle.name || "Unknown Model"}</h3>
                   <p className="text-xs sm:text-sm text-gray-900">{vehicle.vehicle_type?.name || "Unknown Type"}</p>
                 </div>
                 <div className="text-right">

@@ -26,6 +26,7 @@ export default function Home() {
     axios
       .get("http://143.110.242.217:8031/api/vehicle/vehicle/")
       .then((response) => {
+        console.log("keshav",response.data.data);
         setCars(response.data.data || []);
         setLoading(false);
       })
@@ -182,9 +183,10 @@ export default function Home() {
     { href: "/", label: "Home" },
     { href: "/WhyChooseUs", label: "Why Choose Us" },
     { href: "/contactus", label: "Contact" },
-    { href: "/vehicle", label: "Vehicle" },
+    
+
     { href: "/availablevehicle", label: "Available Vehicle" },
-    { href: "/popularcars", label: "Popular Cars" },
+
   ].map((item, index) => (
     <Link
       key={item.href}
@@ -299,7 +301,7 @@ export default function Home() {
       </div>
 
       {/* Car Brands Section */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50 flex justify-center items-center">
+      {/* <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 bg-gray-50 flex justify-center items-center">
         <div className="max-w-7xl mx-auto w-full">
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-16">
             <Image src="/BMW.png" alt="BMW" width={80} height={50} className="h-16 w-auto object-contain" />
@@ -312,13 +314,13 @@ export default function Home() {
             <img src="/KIA.png" alt="Kia" width={120} height={40} className="h-16 w-auto object-contain" />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* How it Works Section */}
       <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-20 -mt-6 sm:-mt-8 md:-mt-10 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
-            <p className="text-gray-500">How it Works</p>
+            <p className="text-gray-500 mt-4 text-xl">How it Works</p>
             <h2
               style={{ fontFamily: "var(--font-space-grotesk)" }}
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0f172a] mt-2"
@@ -519,7 +521,7 @@ export default function Home() {
 
                 <div className="p-4 text-black">
                   <h3 className="text-lg font-bold text-black">
-                    {car.vehicle_model || "Unknown Model"} - 2023
+                    {car.name || "Unknown Model"} - 2023
                   </h3>
                   <p className="text-sm text-gray-600">4.0 DS PowerPulse Momentum 5dr AWD</p>
 
@@ -819,94 +821,7 @@ export default function Home() {
       </section>
 
       {/* Blog Section */}
-      <section className="py-12 md:py-16 bg-gray-50 px-4 sm:px-6 lg:px-20">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-6">Latest Blog Posts</h2>
-
-          <div className="flex justify-between items-center mb-4">
-            <button className="flex items-center gap-2 text-[#ea580c] font-medium bg-white shadow-md px-4 py-1 rounded-full hover:shadow-lg transition">
-              View All
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {/* Blog Card 1 */}
-            <div className="rounded-lg overflow-hidden">
-              <div className="relative">
-                <Image
-                  src="/Blog.png"
-                  alt="BMW ALPINA XB7"
-                  width={400}
-                  height={250}
-                  className="rounded-2xl object-cover w-full h-48 sm:h-56"
-                />
-                <div className="absolute top-4 left-4 bg-white text-black font-semibold px-3 py-1 text-sm rounded-4xl">
-                  Sound
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <div className="flex items-center gap-4 text-sm text-black mb-1">
-                  <span>Admin</span>
-                  <span>November 22, 2023</span>
-                </div>
-                <h3 className="text-lg font-bold text-[#0f172a]">
-                  2024 BMW ALPINA XB7 with exclusive details, extraordinary
-                </h3>
-              </div>
-            </div>
-
-            {/* Blog Card 2 */}
-            <div className="rounded-lg overflow-hidden">
-              <div className="relative">
-                <Image
-                  src="/Blog1.png"
-                  alt="BMW X6 M50i"
-                  width={400}
-                  height={250}
-                  className="rounded-2xl object-cover w-full h-48 sm:h-56"
-                />
-                <div className="absolute top-4 left-4 bg-white text-black font-semibold px-3 py-1 text-sm rounded-4xl">
-                  Accessories
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <div className="flex items-center gap-4 text-sm text-black mb-1">
-                  <span>Admin</span>
-                  <span>November 22, 2023</span>
-                </div>
-                <h3 className="text-lg font-bold text-[#0f172a]">BMW X6 M50i is designed to exceed your sportiest.</h3>
-              </div>
-            </div>
-
-            {/* Blog Card 3 */}
-            <div className="rounded-lg overflow-hidden">
-              <div className="relative">
-                <Image
-                  src="/Blog2.png"
-                  alt="BMW X5 Gold"
-                  width={400}
-                  height={250}
-                  className="rounded-2xl object-cover w-full h-48 sm:h-56"
-                />
-                <div className="absolute top-4 left-4 bg-white text-black font-semibold px-3 py-1 text-sm rounded-4xl">
-                  Exterior
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <div className="flex items-center gap-4 text-sm text-black mb-1">
-                  <span>Admin</span>
-                  <span>November 22, 2023</span>
-                </div>
-                <h3 className="text-lg font-bold text-[#0f172a]">BMW X5 Gold 2024 Sport Review: Light on Sport</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Rent/Host Section */}
       <section className="bg-gray-50 py-8">

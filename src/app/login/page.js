@@ -26,7 +26,7 @@ export default function LoginPage() {
       router.push('/signup'); // navigate to /cardetails
     };
  
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     e.preventDefault();
 
     const payload = {

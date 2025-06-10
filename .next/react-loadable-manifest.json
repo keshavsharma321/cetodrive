@@ -1,0 +1,10 @@
+{
+  "app/cardetails/page.js -> ./CarDetailsClient": {
+    "id": 7127,
+    "files": [
+      "static/chunks/528-3237327d9a09a965.js",
+      "static/chunks/794-b0e525f25a4ec689.js",
+      "static/chunks/127.3d0ab75b98abbaf4.js"
+    ]
+  }
+}

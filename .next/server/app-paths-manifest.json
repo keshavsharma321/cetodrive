@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/billing/page": "app/billing/page.js",
+  "/cardetails/page": "app/cardetails/page.js",
+  "/WhyChooseUs/page": "app/WhyChooseUs/page.js",
+  "/login/page": "app/login/page.js",
+  "/page": "app/page.js",
+  "/popularcars/page": "app/popularcars/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/contactus/page": "app/contactus/page.js",
+  "/availablevehicle/page": "app/availablevehicle/page.js",
+  "/landing/page": "app/landing/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/vehicle/page": "app/vehicle/page.js",
+  "/vehicleform/page": "app/vehicleform/page.js"
+}

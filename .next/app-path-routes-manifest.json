@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/billing/page": "/billing",
+  "/cardetails/page": "/cardetails",
+  "/WhyChooseUs/page": "/WhyChooseUs",
+  "/login/page": "/login",
+  "/page": "/",
+  "/popularcars/page": "/popularcars",
+  "/profile/page": "/profile",
+  "/contactus/page": "/contactus",
+  "/availablevehicle/page": "/availablevehicle",
+  "/landing/page": "/landing",
+  "/signup/page": "/signup",
+  "/vehicle/page": "/vehicle",
+  "/vehicleform/page": "/vehicleform"
+}

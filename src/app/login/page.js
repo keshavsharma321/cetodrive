@@ -12,9 +12,11 @@ import { useRouter } from 'next/navigation';
 import background from "../../../public/View.png"
 import Img from "../../../public/ImgKe.png"
 import Profile from "../../../public/Profill.png"
-
 export default function LoginPage() {
-   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const router = useRouter(); // initialize router
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -23,9 +25,7 @@ export default function LoginPage() {
       const handlesignup = () => {
       router.push('/signup'); // navigate to /cardetails
     };
-   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,7 +46,9 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Login successful:", data);
+        console.log("Login successful:", data.data);
+        const userData = data.data;
+        localStorage.setItem('userData', JSON.stringify(userData));    
         alert("Login successfully");
         router.push('/profile'); 
       } else {

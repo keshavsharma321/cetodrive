@@ -2,124 +2,160 @@
 
 import  React from "react"
 
-import { useState } from "react"
+import { useState , useEffect} from "react"
 import { Phone, Mail, Apple, PlayCircle , Heart, Star, ArrowRight, Check, Menu,   Fuel, Users , ChevronDown, Upload, X, Car, Settings, ImageIcon, CheckCircle, AlertCircle, Plus, BarChart3 } from "lucide-react"
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 
 export default function VehicleForm() {
-  const router = useRouter(); // initialize router
-     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  
-    const toggleMobileMenu = () => {
-      setMobileMenuOpen(!mobileMenuOpen)
-    }
-  const [activeTab, setActiveTab] = useState("basic")
-  const [isLoading, setIsLoading] = useState(false)
+ const router = useRouter() // initialize router
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [images, setImages] = useState([])
   const [imageUrls, setImageUrls] = useState([])
+
+  const [user, setUser] = useState(null)
+
+  const [activeTab, setActiveTab] = useState("basic")
+  const [isLoading, setIsLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [error, setError] = useState("")
 
   const [formData, setFormData] = useState({
     name: "",
     vehicle_model: "",
-    vehicle_type: "1",
-    vehicle_seat: "5",
-    vehicle_share: "Yes",
+    vehicle_share: "No",
     vehicle_number: "",
-    Zip_code: "",
-    Avaialbilty: "",
-    gear_box: "",
+    zip_code: "",
+    availability: "Available",
+    gear_box: "Automatic",
     fuel: "Petrol",
     air_conditioner: "Yes",
+    vehicle_seat: 2,
     distance: "",
+    vehicle_type: 1,
+    equipment: [],
     price: "",
   })
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleImageChange = () => {
-    if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files)
-      setImages((prev) => [...prev, ...selectedFiles])
-
-      const newImageUrls = selectedFiles.map((file) => URL.createObjectURL(file))
-      setImageUrls((prev) => [...prev, ...newImageUrls])
+    if (name === "vehicle_seat" || name === "vehicle_type") {
+      setFormData((prev) => ({ ...prev, [name]: Number.parseInt(value) }))
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }))
     }
   }
 
-  const removeImage = () => {
-    setImages((prev) => prev.filter((_, i) => i !== index))
-    URL.revokeObjectURL(imageUrls[index])
-    setImageUrls((prev) => prev.filter((_, i) => i !== index))
+  const handleEquipmentChange = (equipmentId) => {
+    setFormData((prev) => ({
+      ...prev,
+      equipment: prev.equipment.includes(equipmentId)
+        ? prev.equipment.filter((id) => id !== equipmentId)
+        : [...prev.equipment, equipmentId],
+    }))
   }
 
-  const handleSubmit = async () => {
-    window.alert("Vehicle Registered Successfully")
-    // e.preventDefault()
-    // setIsLoading(true)
-    // setError("")
-
-    // try {
-    //   const submitData = new FormData()
-
-    //   Object.entries(formData).forEach(([key, value]) => {
-    //     submitData.append(key, value)
-    //   })
-
-    //   images.forEach((image) => {
-    //     submitData.append("images", image)
-    //   })
-
-    //   const response = await fetch("http://143.110.242.217:8031/api/vehicle/vehicle/", {
-    //     method: "POST",
-    //     body: submitData,
-    //   })
-
-    //   if (!response.ok) {
-    //     throw new Error(`Error: ${response.status}`)
-    //   }
-
-    //   setShowSuccess(true)
-    //   setTimeout(() => setShowSuccess(false), 5000)
-
-    //   // Reset form
-    //   setFormData({
-    //     name: "",
-    //     vehicle_model: "",
-    //     vehicle_type: "1",
-    //     vehicle_seat: "5",
-    //     vehicle_share: "Yes",
-    //     vehicle_number: "",
-    //     Zip_code: "",
-    //     Avaialbilty: "",
-    //     gear_box: "",
-    //     fuel: "Petrol",
-    //     air_conditioner: "Yes",
-    //     distance: "",
-    //     price: "",
-    //   })
-    //   setImages([])
-    //   setImageUrls([])
-    //   setActiveTab("basic")
-    // } catch (error) {
-    //   setError("Failed to add vehicle. Please try again.")
-    // } finally {
-    //   setIsLoading(false)
-    // }
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
   }
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("userData")
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+  }, [])
+
+  if (!user) return <div>Loading...</div>
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
+  setError("");
+  setShowSuccess(false);
+
+  try {
+    const data = new FormData();
+
+    // Append all form fields
+    data.append("name", formData.name);
+    data.append("vehicle_model", formData.vehicle_model);
+    data.append("vehicle_share", formData.vehicle_share);
+    data.append("vehicle_number", formData.vehicle_number);
+    data.append("zip_code", formData.zip_code);
+    data.append("availability", formData.availability);
+    data.append("gear_box", formData.gear_box);
+    data.append("fuel", formData.fuel);
+    data.append("air_conditioner", formData.air_conditioner);
+    data.append("vehicle_seat", formData.vehicle_seat);
+    data.append("distance", formData.distance);
+    data.append("vehicle_type", formData.vehicle_type);
+    data.append("price", formData.price);
+
+    // Append array of equipment (as JSON string or individual fields, depends on backend)
+    formData.equipment.forEach((id) => data.append("equipment[]", id));
+
+    // Append images
+    images.forEach((image, index) => {
+      data.append(`images`, image); // adjust field name as needed
+    });
+
+    // Send FormData using fetch (or use axios with `headers: { 'Content-Type': 'multipart/form-data' }`)
+    const response = await fetch("http://143.110.242.217:8031/api/vehicle/vehicle/", {
+      method: "POST",
+      body: data,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add vehicle");
+    }
+
+    setShowSuccess(true);
+    setFormData({
+      name: "",
+      vehicle_model: "",
+      vehicle_share: "No",
+      vehicle_number: "",
+      zip_code: "",
+      availability: "Available",
+      gear_box: "Automatic",
+      fuel: "Petrol",
+      air_conditioner: "Yes",
+      vehicle_seat: 2,
+      distance: "",
+      vehicle_type: 1,
+      equipment: [],
+      price: "",
+    });
+    setImages([]);
+  } catch (err) {
+    setError(err.message || "Something went wrong.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const tabs = [
     { id: "basic", label: "Basic Information", icon: Car },
     { id: "specs", label: "Specifications", icon: Settings },
-    { id: "images", label: "Images & Media", icon: ImageIcon },
+    { id: "images", label: "Images", icon: ImageIcon },
   ]
 
-  
+  const stats = [
+    { label: "Total Vehicles", value: "24", change: "+2 this month", color: "text-orange-600" },
+    { label: "Active Bookings", value: "18", change: "+5 today", color: "text-green-600" },
+    { label: "Revenue", value: "$12,450", change: "+15% this month", color: "text-blue-600" },
+  ]
+
+  const equipmentOptions = [
+    { id: 1, name: "GPS Navigation" },
+    { id: 2, name: "Bluetooth" },
+    { id: 3, name: "Backup Camera" },
+    { id: 4, name: "Sunroof" },
+    { id: 5, name: "Leather Seats" },
+    { id: 6, name: "Heated Seats" },
+  ]
 
   return (
 
@@ -241,12 +277,12 @@ export default function VehicleForm() {
 
 
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="space-y-8">
+   <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl p-8 text-white">
+      <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome back, John! 👋</h1>
+            <h1 className="text-3xl font-bold mb-2">Welcome back , {user.username} 👋</h1>
             <p className="text-orange-100 text-lg">Ready to add a new vehicle to your fleet?</p>
           </div>
           <div className="hidden md:block">
@@ -303,10 +339,10 @@ export default function VehicleForm() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-3 py-4 px-2 border-b-2 font-medium text-sm transition-all ${
+                  className={`flex items-center space-x-3 py-4 px-2 border-b-2 font-medium text-md transition-all ${
                     activeTab === tab.id
                       ? "border-orange-500 text-orange-600 bg-white"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                      : "border-transparent  hover:text-gray-700 hover:border-gray-300 text-black"
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -323,7 +359,7 @@ export default function VehicleForm() {
             <div className="space-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Vehicle Name <span className="text-orange-500">*</span>
                   </label>
                   <input
@@ -331,14 +367,14 @@ export default function VehicleForm() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Volkswagen Tiguan - Red"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="e.g. Toyota Camry"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Vehicle Model <span className="text-orange-500">*</span>
                   </label>
                   <input
@@ -346,106 +382,111 @@ export default function VehicleForm() {
                     name="vehicle_model"
                     value={formData.vehicle_model}
                     onChange={handleChange}
-                    placeholder="e.g. 2022"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="e.g. 2021"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Vehicle Type <span className="text-orange-500">*</span>
                   </label>
                   <select
                     name="vehicle_type"
                     value={formData.vehicle_type}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
-                    <option value="1">SUV</option>
-                    <option value="2">Sedan</option>
-                    <option value="3">Hatchback</option>
-                    <option value="4">Mid-size 4x4 SUV (off-road focused)</option>
+                    <option value={1}>SUV</option>
+                    <option value={2}>Sedan</option>
+                    <option value={3}>Hatchback</option>
+                    <option value={4}>Truck</option>
+                    <option value={5}>Coupe</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Seat Capacity <span className="text-orange-500">*</span>
                   </label>
                   <select
                     name="vehicle_seat"
                     value={formData.vehicle_seat}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
-                    <option value="2">2 Seats</option>
-                    <option value="4">4 Seats</option>
-                    <option value="5">5 Seats</option>
-                    <option value="7">7 Seats</option>
+                    <option value={5}>5 Seats</option>
+                    <option value={7}>7 Seats</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Vehicle Number</label>
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
+                    Vehicle Number <span className="text-orange-500">*</span>
+                  </label>
                   <input
                     type="text"
                     name="vehicle_number"
                     value={formData.vehicle_number}
                     onChange={handleChange}
-                    placeholder="e.g. ABC123"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="e.g. AB123CD"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Zip Code <span className="text-orange-500">*</span>
                   </label>
                   <input
                     type="text"
-                    name="Zip_code"
-                    value={formData.Zip_code}
+                    name="zip_code"
+                    value={formData.zip_code}
                     onChange={handleChange}
-                    placeholder="e.g. 7777"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="e.g. 12345"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Availability Location <span className="text-orange-500">*</span>
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
+                    Availability <span className="text-orange-500">*</span>
                   </label>
-                  <input
-                    type="text"
-                    name="Avaialbilty"
-                    value={formData.Avaialbilty}
+                  <select
+                    name="availability"
+                    value={formData.availability}
                     onChange={handleChange}
-                    placeholder="e.g. Texas"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-                    required
-                  />
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                  >
+                    <option value="Available">Available</option>
+                    <option value="Unavailable">Unavailable</option>
+                    <option value="Maintenance">Under Maintenance</option>
+                    <option value="Booked">Booked</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Price per Day ($) <span className="text-orange-500">*</span>
                   </label>
                   <input
                     type="number"
+                    step="0.01"
                     name="price"
                     value={formData.price}
                     onChange={handleChange}
-                    placeholder="e.g. 500"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="e.g. 2000.00"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                     required
                   />
                 </div>
               </div>
 
               <div className="bg-orange-50 rounded-xl p-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-4">Available for Sharing</label>
+                <label className="block text-md font-semibold text-gray-700 mb-4">Vehicle Sharing</label>
                 <div className="flex space-x-6">
                   <label className="flex items-center cursor-pointer">
                     <input
@@ -454,9 +495,9 @@ export default function VehicleForm() {
                       value="Yes"
                       checked={formData.vehicle_share === "Yes"}
                       onChange={handleChange}
-                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300"
+                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 text-black"
                     />
-                    <span className="ml-3 text-sm font-medium text-gray-700">Yes, available for sharing</span>
+                    <span className="ml-3 text-md font-medium text-gray-700">Yes, available for sharing</span>
                   </label>
                   <label className="flex items-center cursor-pointer">
                     <input
@@ -465,9 +506,9 @@ export default function VehicleForm() {
                       value="No"
                       checked={formData.vehicle_share === "No"}
                       onChange={handleChange}
-                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300"
+                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 text-black"
                     />
-                    <span className="ml-3 text-sm font-medium text-gray-700">No, private use only</span>
+                    <span className="ml-3 text-md font-medium text-gray-700">No, private use only</span>
                   </label>
                 </div>
               </div>
@@ -479,78 +520,83 @@ export default function VehicleForm() {
             <div className="space-y-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Gear Box <span className="text-orange-500">*</span>
                   </label>
-                  <input
-                    type="text"
+                  <select
                     name="gear_box"
                     value={formData.gear_box}
                     onChange={handleChange}
-                    placeholder="e.g. 8-Speed Automatic Transmission"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
-                    required
-                  />
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                  >
+                    <option value="Automatic">Automatic</option>
+                    <option value="Manual">Manual</option>
+                    <option value="CVT">CVT</option>
+                    <option value="Semi-Automatic">Semi-Automatic</option>
+                  </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
                     Fuel Type <span className="text-orange-500">*</span>
                   </label>
                   <select
                     name="fuel"
                     value={formData.fuel}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                   >
                     <option value="Petrol">Petrol</option>
                     <option value="Diesel">Diesel</option>
                     <option value="Electric">Electric</option>
                     <option value="Hybrid">Hybrid</option>
+                    <option value="CNG">CNG</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Distance <span className="text-orange-500">*</span>
+                  <label className="block text-md font-semibold text-gray-700 mb-2">
+                    Distance (KM) <span className="text-orange-500">*</span>
                   </label>
                   <input
                     type="text"
                     name="distance"
                     value={formData.distance}
                     onChange={handleChange}
-                    placeholder="e.g. 77000KM"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="e.g. 10000"
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                     required
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-md font-semibold text-gray-700 mb-2">Air Conditioner</label>
+                  <select
+                    name="air_conditioner"
+                    value={formData.air_conditioner}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 text-black rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                  >
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
                 </div>
               </div>
 
               <div className="bg-orange-50 rounded-xl p-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-4">Air Conditioner</label>
-                <div className="flex space-x-6">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="air_conditioner"
-                      value="Yes"
-                      checked={formData.air_conditioner === "Yes"}
-                      onChange={handleChange}
-                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300"
-                    />
-                    <span className="ml-3 text-sm font-medium text-gray-700">Yes, has air conditioning</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="air_conditioner"
-                      value="No"
-                      checked={formData.air_conditioner === "No"}
-                      onChange={handleChange}
-                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300"
-                    />
-                    <span className="ml-3 text-sm font-medium text-gray-700">No air conditioning</span>
-                  </label>
+                <label className="block text-md font-semibold text-gray-700 mb-4">Equipment</label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {equipmentOptions.map((equipment) => (
+                    <label key={equipment.id} className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={formData.equipment.includes(equipment.id)}
+                        onChange={() => handleEquipmentChange(equipment.id)}
+                        className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 text-black rounded"
+                      />
+                      <span className="ml-3 text-md font-medium text-gray-700">{equipment.name}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
             </div>
@@ -559,56 +605,15 @@ export default function VehicleForm() {
           {/* Images Tab */}
           {activeTab === "images" && (
             <div className="space-y-8">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-6">Vehicle Images</label>
+              <div className="bg-orange-50 rounded-xl p-8 text-center">
+                <ImageIcon className="h-16 w-16 text-orange-400 mx-auto mb-4" />
+                <input
+  type="file"
+  multiple
+  accept="image/*"
+  onChange={(e) => setImages(Array.from(e.target.files))}
+/>
 
-                {/* Image Upload Area */}
-                <div className="border-2 border-dashed border-orange-300 rounded-2xl p-12 text-center hover:border-orange-400 transition-colors bg-orange-50/50">
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="hidden"
-                    id="image-upload"
-                  />
-                  <label htmlFor="image-upload" className="cursor-pointer">
-                    <div className="bg-orange-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                      <Upload className="h-8 w-8 text-orange-600" />
-                    </div>
-                    <p className="text-xl font-semibold text-gray-700 mb-2">Upload Vehicle Images</p>
-                    <p className="text-gray-500 mb-4">Drag and drop your images here, or click to browse</p>
-                    <p className="text-sm text-gray-400">PNG, JPG, GIF up to 10MB each</p>
-                  </label>
-                </div>
-
-                {/* Image Previews */}
-                {imageUrls.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-4">Uploaded Images ({imageUrls.length})</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                      {imageUrls.map((url, index) => (
-                        <div key={index} className="relative group">
-                          <img
-                            src={url || "/placeholder.svg"}
-                            alt={`Vehicle preview ${index + 1}`}
-                            className="w-full h-40 object-cover rounded-xl border-2 border-gray-200 group-hover:border-orange-300 transition-colors"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => removeImage(index)}
-                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-red-600"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                          <div className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-                            Image {index + 1}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           )}
@@ -625,7 +630,7 @@ export default function VehicleForm() {
                       setActiveTab(tabs[currentIndex - 1].id)
                     }
                   }}
-                  className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+                  className="px-6 py-3 border-2 border-gray-300 text-black text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
                 >
                   ← Previous
                 </button>
@@ -678,7 +683,7 @@ export default function VehicleForm() {
             {/* Left column */}
             <div>
               <h1 className="text-2xl font-bold mb-2">CatoDrive</h1>
-              <p className="text-sm mb-6 max-w-md">
+              <p className="text-md mb-6 max-w-md">
                 Exceptional and modern registration non-problem, sunt incidunt qui officia deserunt mollit anim id est.
               </p>
 
@@ -687,7 +692,7 @@ export default function VehicleForm() {
                   <div className="bg-transparent p-2 mr-2">
                     <Phone size={18} className="text-gray-400" />
                   </div>
-                  <input type="text" placeholder="+XXXXXXXXX" className="bg-transparent outline-none w-full text-sm" />
+                  <input type="text" placeholder="+XXXXXXXXX" className="bg-transparent outline-none w-full text-md" />
                 </div>
 
                 <div className="flex items-center bg-[#111327] rounded-xl p-2 max-w-xs">
@@ -697,7 +702,7 @@ export default function VehicleForm() {
                   <input
                     type="email"
                     placeholder="example@email.com"
-                    className="bg-transparent outline-none w-full text-sm"
+                    className="bg-transparent outline-none w-full text-md"
                   />
                 </div>
               </div>
@@ -706,14 +711,14 @@ export default function VehicleForm() {
             {/* Right column */}
             <div>
               <h2 className="text-xl font-bold mb-2">Join CatoDrive</h2>
-              <p className="text-sm mb-6">Receive pricing updates, shopping tips & more!</p>
+              <p className="text-md mb-6">Receive pricing updates, shopping tips & more!</p>
 
               <div className="space-y-3">
                 <div>
                   <label htmlFor="email" className="text-xs block mb-1">
                     Your email address
                   </label>
-                  <input type="email" id="email" className="w-full bg-[#111327] rounded-xl p-3 outline-none text-sm" />
+                  <input type="email" id="email" className="w-full bg-[#111327] rounded-xl p-3 outline-none text-md" />
                 </div>
 
                 <button className="w-full bg-[#3b5bf5] hover:bg-[#2a4ae0] text-white py-3 rounded-xl transition-colors">
@@ -729,7 +734,7 @@ export default function VehicleForm() {
               {/* Company */}
               <div>
                 <h3 className="font-bold mb-4">Company</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-md">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       About Us
@@ -766,7 +771,7 @@ export default function VehicleForm() {
               {/* Quick Links */}
               <div>
                 <h3 className="font-bold mb-4">Quick Links</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-md">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       Get in Touch
@@ -793,7 +798,7 @@ export default function VehicleForm() {
               {/* Our Brands */}
               <div>
                 <h3 className="font-bold mb-4">Our Brands</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-md">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       Toyota
@@ -835,7 +840,7 @@ export default function VehicleForm() {
               {/* Vehicles Type */}
               <div>
                 <h3 className="font-bold mb-4">Vehicles Type</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-md">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       Sedan
@@ -883,14 +888,14 @@ export default function VehicleForm() {
               <div>
                 <h3 className="font-bold mb-4">Our Mobile App</h3>
                 <div className="space-y-3">
-                  <Link href="#" className="flex items-center gap-2 text-sm hover:text-gray-300">
+                  <Link href="#" className="flex items-center gap-2 text-md hover:text-gray-300">
                     <Apple size={20} />
                     <div>
                       <div className="text-xs">Download on the</div>
                       <div className="font-medium">Apple Store</div>
                     </div>
                   </Link>
-                  <Link href="#" className="flex items-center gap-2 text-sm hover:text-gray-300">
+                  <Link href="#" className="flex items-center gap-2 text-md hover:text-gray-300">
                     <PlayCircle size={20} />
                     <div>
                       <div className="text-xs">Get it on</div>

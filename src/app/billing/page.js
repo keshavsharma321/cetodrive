@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Phone, Mail, Apple, PlayCircle , Heart, Star } from "lucide-react"
 import Image from "next/image"
 import { ArrowRight, Check, Menu, X ,  Fuel, Settings, Users , ChevronDown} from "lucide-react"
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import background from "../../../public/View.png"
 import Img from "../../../public/ImgKe.png"
@@ -17,6 +17,15 @@ export default function Component() {
    const [amount ,setamount] = useState(null)
 
    const router = useRouter();
+   const [vehicle, setVehicle] = useState(null);
+
+useEffect(() => {
+  const storedVehicle = localStorage.getItem("vehicle");
+  console.log(storedVehicle);
+  if (storedVehicle) {
+    setVehicle(JSON.parse(storedVehicle));
+  }
+}, []);
   const handleLogin = () => {
       router.push('/login'); // navigate to /cardetails
     };
@@ -640,7 +649,11 @@ console.log(formData)
            <div className="flex items-center w-full justify-center p-4 border border-gray-200 rounded-lg">
   <div className="flex items-center gap-2">
     <label>Amount to be paid</label>:
-    <input type="number" value={amount} className="border border-gray-300 rounded px-2 py-1" />
+<input
+  type="number"
+  value={amount ?? ""}
+  className="border border-gray-300 rounded px-2 py-1"
+/>
   </div>
 </div>
 
@@ -730,67 +743,70 @@ console.log(formData)
         </div>
 
         {/* Rental Summary Sidebar */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg p-6 shadow-sm sticky top-4">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Rental Summary</h3>
-            <p className="text-gray-500 text-sm mb-6">
-              Prices may change depending on the length of the rental and the price of your rental car.
-            </p>
+       <div className="lg:col-span-1">
+  <div className="bg-white rounded-lg p-6 shadow-sm sticky top-4">
+    <h3 className="text-xl font-semibold text-gray-900 mb-2">Rental Summary</h3>
+    <p className="text-gray-500 text-sm mb-6">
+      Prices may change depending on the length of the rental and the price of your rental car.
+    </p>
 
-            {/* Car Info */}
-            <div className="flex items-center mb-6">
-              <div className="w-24 h-16 rounded-lg mr-4 flex items-center justify-center">
-                <Image
-                  src={Profile || "/placeholder.svg"}
-                  alt="Nissan GT-R"
-                  width={88}
-                  height={48}
-                  className="rounded"
-                />
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">Nissan GT - R</h4>
-                <div className="flex items-center mt-1">
-                  <div className="flex text-yellow-400">
-                    <span>★★★★</span>
-                    <span className="text-gray-300">★</span>
-                  </div>
-                  <span className="text-sm text-gray-500 ml-2">440+ Reviewer</span>
-                </div>
-              </div>
+    {/* Car Info */}
+    {vehicle && (
+      <div className="flex items-center mb-6">
+        <div className="w-24 h-16 rounded-lg mr-4 flex items-center justify-center">
+          <img
+            src={`http://143.110.242.217:8031${vehicle.images?.[0]?.image || "/placeholder.svg"}`}
+            alt={vehicle.name}
+            width={88}
+            height={48}
+            className="rounded"
+          />
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-900">{vehicle.name}</h4>
+          <div className="flex items-center mt-1">
+            <div className="flex text-yellow-400">
+              <span>★★★★</span>
+              <span className="text-gray-300">★</span>
             </div>
-
-            <div className="border-t pt-4 space-y-3">
-              <div className="flex justify-between text-gray-600">
-                <span>Subtotal</span>
-                <span>$80.00</span>
-              </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Tax</span>
-                <span>$0</span>
-              </div>
-            </div>
-
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-              <input
-                type="text"
-                placeholder="Apply promo code"
-                className="w-full bg-transparent border-none outline-none text-sm text-gray-600 placeholder-gray-400"
-              />
-              <button className="text-sm font-medium text-gray-900 mt-2">Apply now</button>
-            </div>
-
-            <div className="mt-6 pt-4 border-t">
-              <div className="flex justify-between items-center">
-                <div>
-                  <div className="font-semibold text-gray-900">Total Rental Price</div>
-                  <div className="text-sm text-gray-500">Overall price and includes rental discount</div>
-                </div>
-                <div className="text-2xl font-bold text-gray-900">$80.00</div>
-              </div>
-            </div>
+            <span className="text-sm text-gray-500 ml-2">440+ Reviewer</span>
           </div>
         </div>
+      </div>
+    )}
+
+    <div className="border-t pt-4 space-y-3">
+      <div className="flex justify-between text-gray-600">
+        <span>Subtotal</span>
+        <span>${vehicle?.price || '0'}</span>
+      </div>
+      <div className="flex justify-between text-gray-600">
+        <span>Tax</span>
+        <span>$0</span>
+      </div>
+    </div>
+
+    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+      <input
+        type="text"
+        placeholder="Apply promo code"
+        className="w-full bg-transparent border-none outline-none text-sm text-gray-600 placeholder-gray-400"
+      />
+      <button className="text-sm font-medium text-gray-900 mt-2">Apply now</button>
+    </div>
+
+    <div className="mt-6 pt-4 border-t">
+      <div className="flex justify-between items-center">
+        <div>
+          <div className="font-semibold text-gray-900">Total Rental Price</div>
+          <div className="text-sm text-gray-500">Overall price and includes rental discount</div>
+        </div>
+        <div className="text-2xl font-bold text-gray-900">${vehicle?.price || '0'}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
       </div>
     </div>
 

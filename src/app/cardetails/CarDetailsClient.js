@@ -19,21 +19,30 @@ export default function Home() {
   const [reviewsLoading, setReviewsLoading] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  useEffect(() => {
-    if (!id) return
+ useEffect(() => {
+  if (!id) return;
 
-    axios
-      .get(`http://143.110.242.217:8031/api/vehicle/vehicle/${id}`)
-      .then((response) => {
-        console.log("Vehicle API Response:", response.data.data)
-        setVehicle(response.data.data)
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.error("Vehicle API Error:", error)
-        setLoading(false)
-      })
-  }, [id])
+  axios
+    .get(`http://143.110.242.217:8031/api/vehicle/vehicle/${id}`)
+    .then((response) => {
+      console.log("Vehicle API Response:", response.data.data);
+      const vehicleData = response.data.data;
+
+      // Remove existing vehicle data
+      localStorage.removeItem("vehicle");
+
+      // Save new vehicle data to localStorage
+      localStorage.setItem("vehicle", JSON.stringify(vehicleData));
+
+      setVehicle(vehicleData);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Vehicle API Error:", error);
+      setLoading(false);
+    });
+}, [id]);
+
 
   // Fetch reviews dynamically
   useEffect(() => {

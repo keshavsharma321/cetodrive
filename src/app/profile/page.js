@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, Apple, PlayCircle , Heart, Star } from "lucide-react"
 import { ArrowRight, Check, Menu, X ,  Fuel, Settings, Users , ChevronDown} from "lucide-react"
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import "react-datepicker/dist/react-datepicker.css"
 import background from "../../../public/View.png"
 import Img from "../../../public/ImgKe.png"
@@ -15,11 +15,21 @@ import { useRouter } from 'next/navigation';
 export default function LoginPage() {
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userData');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  if (!user) return <div>Loading...</div>;
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
-   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
       const router = useRouter(); // initialize router
     
 
@@ -175,7 +185,7 @@ export default function LoginPage() {
 
       </div>
 
-     <div className="min-h-screen bg-white p-8 font-sans">
+    <div className="min-h-screen bg-white p-8 font-sans">
       {/* Profile Section */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
@@ -187,40 +197,65 @@ export default function LoginPage() {
             className="rounded-full"
           />
           <div>
-            <h2 className="text-lg font-semibold text-gray-800">lorem ipsum</h2>
-            <p className="text-sm text-gray-500">aloremipsum@gmail.com</p>
+            <h2 className="text-xl font-semibold text-gray-800">{user.username}</h2>
+            <p className="text-lg text-gray-500">{user.email}</p>
           </div>
         </div>
-        <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">
+        {/* <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">
           Edit
-        </button>
+        </button> */}
       </div>
 
       {/* Form */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Full Name</label>
-          <input className="w-full border-amber-50 rounded px-4 py-2 text-black bg-gray-100" placeholder="Your First Name" />
+          <label className="block text-lg text-gray-600 mb-1">Full Name</label>
+          <input
+            className="w-full border-amber-50 rounded px-4 py-2 text-black bg-gray-100"
+            value={user.username}
+            readOnly
+          />
         </div>
         <div>
-          <label className="block text-sm text-gray-600 mb-1">User Name</label>
-          <input className="w-full border-amber-50 rounded px-4 py-2 text-black bg-gray-100" placeholder="User Name" />
+          <label className="block text-lg text-gray-600 mb-1">User Name</label>
+          <input
+            className="w-full border-amber-50 rounded px-4 py-2 text-black bg-gray-100"
+            value={user.username}
+            readOnly
+          />
         </div>
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Address</label>
-          <input className="w-full border-amber-50 rounded px-4 py-2 text-black bg-gray-100" placeholder="Your Address" />
+          <label className="block text-lg text-gray-600 mb-1">Address</label>
+          <input
+            className="w-full border-amber-50 rounded px-4 py-2 text-black bg-gray-100"
+            value="N/A"
+            readOnly
+          />
         </div>
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Password</label>
-          <input className="w-full rounded px-4 py-2  border-amber-50  text-black bg-gray-100" placeholder="Your Password" type="password" />
+          <label className="block text-lg text-gray-600 mb-1">Password</label>
+          <input
+            className="w-full rounded px-4 py-2 border-amber-50 text-black bg-gray-100"
+            type="password"
+            value={user.re_password}
+            readOnly
+          />
         </div>
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Language</label>
-          <input className="w-full border rounded px-4 py-2 border-amber-50  text-black bg-gray-100" placeholder="Your First Name" />
+          <label className="block text-lg text-gray-600 mb-1">User Type</label>
+          <input
+            className="w-full border rounded px-4 py-2 border-amber-50 text-black bg-gray-100"
+            value={user.vehcile_types}
+            readOnly
+          />
         </div>
         <div>
-          <label className="block text-sm text-gray-600 mb-1">Phone Number</label>
-          <input className="w-full border rounded px-4 border-amber-50  text-black py-2 bg-gray-100" placeholder="Your Phone Number" />
+          <label className="block text-lg text-gray-600 mb-1">Phone Number</label>
+          <input
+            className="w-full border rounded px-4 py-2 border-amber-50 text-black bg-gray-100"
+            value="N/A"
+            readOnly
+          />
         </div>
       </div>
 
@@ -230,21 +265,15 @@ export default function LoginPage() {
         <div className="flex items-center gap-4 bg-gray-100 rounded p-4 max-w-md">
           <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center">✉️</div>
           <div>
-            <p className="text-sm font-medium">alexarwales@gmail.com</p>
-            <p className="text-xs text-gray-500">1 month ago</p>
+            <p className="text-lg text-black font-medium">{user.email}</p>
+            <p className="text-xs text-gray-800">Just now</p>
           </div>
         </div>
-        <button className="mt-4 text-blue-600 text-sm px-4 py-2 rounded bg-gray-100 hover:bg-gray-200">
-          + Add Email Address
-        </button>
+       
       </div>
 
       {/* Save Button */}
-      <div className="flex justify-end">
-        <button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded">
-          Save
-        </button>
-      </div>
+      
     </div>
 
 
@@ -256,7 +285,7 @@ export default function LoginPage() {
             {/* Left column */}
             <div>
               <h1 className="text-2xl font-bold mb-2">CatoDrive</h1>
-              <p className="text-sm mb-6 max-w-md">
+              <p className="text-lg mb-6 max-w-md">
                 Exceptional and modern registration non-problem, sunt incidunt qui officia deserunt mollit anim id est.
               </p>
 
@@ -265,7 +294,7 @@ export default function LoginPage() {
                   <div className="bg-transparent p-2 mr-2">
                     <Phone size={18} className="text-gray-400" />
                   </div>
-                  <input type="text" placeholder="+XXXXXXXXX" className="bg-transparent outline-none w-full text-sm" />
+                  <input type="text" placeholder="+XXXXXXXXX" className="bg-transparent outline-none w-full text-lg" />
                 </div>
 
                 <div className="flex items-center bg-[#111327] rounded-xl p-2 max-w-xs">
@@ -275,7 +304,7 @@ export default function LoginPage() {
                   <input
                     type="email"
                     placeholder="example@email.com"
-                    className="bg-transparent outline-none w-full text-sm"
+                    className="bg-transparent outline-none w-full text-lg"
                   />
                 </div>
               </div>
@@ -284,14 +313,14 @@ export default function LoginPage() {
             {/* Right column */}
             <div>
               <h2 className="text-xl font-bold mb-2">Join CatoDrive</h2>
-              <p className="text-sm mb-6">Receive pricing updates, shopping tips & more!</p>
+              <p className="text-lg mb-6">Receive pricing updates, shopping tips & more!</p>
 
               <div className="space-y-3">
                 <div>
                   <label htmlFor="email" className="text-xs block mb-1">
                     Your email address
                   </label>
-                  <input type="email" id="email" className="w-full bg-[#111327] rounded-xl p-3 outline-none text-sm" />
+                  <input type="email" id="email" className="w-full bg-[#111327] rounded-xl p-3 outline-none text-lg" />
                 </div>
 
                 <button className="w-full bg-[#3b5bf5] hover:bg-[#2a4ae0] text-white py-3 rounded-xl transition-colors">
@@ -307,7 +336,7 @@ export default function LoginPage() {
               {/* Company */}
               <div>
                 <h3 className="font-bold mb-4">Company</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-lg">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       About Us
@@ -344,7 +373,7 @@ export default function LoginPage() {
               {/* Quick Links */}
               <div>
                 <h3 className="font-bold mb-4">Quick Links</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-lg">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       Get in Touch
@@ -371,7 +400,7 @@ export default function LoginPage() {
               {/* Our Brands */}
               <div>
                 <h3 className="font-bold mb-4">Our Brands</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-lg">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       Toyota
@@ -413,7 +442,7 @@ export default function LoginPage() {
               {/* Vehicles Type */}
               <div>
                 <h3 className="font-bold mb-4">Vehicles Type</h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-lg">
                   <li>
                     <Link href="#" className="hover:text-gray-300">
                       Sedan
@@ -461,14 +490,14 @@ export default function LoginPage() {
               <div>
                 <h3 className="font-bold mb-4">Our Mobile App</h3>
                 <div className="space-y-3">
-                  <Link href="#" className="flex items-center gap-2 text-sm hover:text-gray-300">
+                  <Link href="#" className="flex items-center gap-2 text-lg hover:text-gray-300">
                     <Apple size={20} />
                     <div>
                       <div className="text-xs">Download on the</div>
                       <div className="font-medium">Apple Store</div>
                     </div>
                   </Link>
-                  <Link href="#" className="flex items-center gap-2 text-sm hover:text-gray-300">
+                  <Link href="#" className="flex items-center gap-2 text-lg hover:text-gray-300">
                     <PlayCircle size={20} />
                     <div>
                       <div className="text-xs">Get it on</div>

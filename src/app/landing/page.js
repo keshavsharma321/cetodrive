@@ -24,7 +24,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://143.110.242.217:8031/api/vehicle/vehicle/")
+      .get("http://3.108.23.172:8002/api/vehicle/vehicle/")
       .then((response) => {
         console.log("keshav",response.data.data);
         setCars(response.data.data || []);

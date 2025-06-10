@@ -23,7 +23,7 @@ export default function Home() {
   if (!id) return;
 
   axios
-    .get(`http://143.110.242.217:8031/api/vehicle/vehicle/${id}`)
+    .get(`http://3.108.23.172:8002/api/vehicle/vehicle/${id}`)
     .then((response) => {
       console.log("Vehicle API Response:", response.data.data);
       const vehicleData = response.data.data;
@@ -47,7 +47,7 @@ export default function Home() {
   // Fetch reviews dynamically
   useEffect(() => {
     axios
-      .get("http://143.110.242.217:8031/api/reviews/reviews/")
+      .get("http://3.108.23.172:8002/api/reviews/reviews/")
       .then((response) => {
         const formattedReviews = response.data.data.map((item) => ({
           id: item.id,

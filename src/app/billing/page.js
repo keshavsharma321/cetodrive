@@ -94,7 +94,7 @@ const handlePayment = async () => {
 
   // try {
   //   const response = await axios.post(
-  //     "http://143.110.242.217:8031/api/payment/create-order/",
+  //     "http://3.108.23.172:8002/api/payment/create-order/",
   //     {
   //       booking_id: 21,
   //     },
@@ -159,7 +159,7 @@ const handleSubmit = async () => {
     }
 
 console.log(formData)
-    const response = await axios.post("http://143.110.242.217:8031/api/booking/booking/", formData, {
+    const response = await axios.post("http://3.108.23.172:8002/api/booking/booking/", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

@@ -101,7 +101,7 @@ export default function VehicleForm() {
     });
 
     // Send FormData using fetch (or use axios with `headers: { 'Content-Type': 'multipart/form-data' }`)
-    const response = await fetch("http://143.110.242.217:8031/api/vehicle/vehicle/", {
+    const response = await fetch("http://3.108.23.172:8002/api/vehicle/vehicle/", {
       method: "POST",
       body: data,
     });

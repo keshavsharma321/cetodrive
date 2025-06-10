@@ -13,6 +13,8 @@ import Img from "../../../public/ImgKe.png"
 import Profile from "../../../public/Profill.png"
 import { useRouter } from 'next/navigation';
 export default function LoginPage() {
+        const router = useRouter(); // initialize router
+g
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
    const [user, setUser] = useState(null);
@@ -30,7 +32,6 @@ export default function LoginPage() {
     setMobileMenuOpen(!mobileMenuOpen)
   }
 
-      const router = useRouter(); // initialize router
     
 
   const rentcar = () =>{

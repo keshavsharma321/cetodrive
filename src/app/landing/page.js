@@ -11,11 +11,11 @@ import { useRouter } from 'next/navigation';
 import background from "../../../public/backgorund.jpg"
 import axios from "axios"
 export default function Home() {
+  const router = useRouter();
   const [pickupDate, setPickupDate] = useState(new Date())
   const [returnDate, setReturnDate] = useState(new Date(new Date().setDate(new Date().getDate() + 1)))
   const [location, setLocation] = useState("")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const router = useRouter();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
 

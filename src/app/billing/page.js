@@ -12,11 +12,10 @@ import Profile from "../../../public/Look.png"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 export default function Component() {
+   const router = useRouter();
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
    const [bookingId, setBookingId] = useState(null)
    const [amount ,setamount] = useState(null)
-
-   const router = useRouter();
    const [vehicle, setVehicle] = useState(null);
 
 useEffect(() => {

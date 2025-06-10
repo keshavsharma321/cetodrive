@@ -14,7 +14,7 @@ import Profile from "../../../public/Profill.png"
 import { useRouter } from 'next/navigation';
 export default function LoginPage() {
         const router = useRouter(); // initialize router
-g
+
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
    const [user, setUser] = useState(null);
